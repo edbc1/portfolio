@@ -34,7 +34,7 @@ export function TopBar() {
     <div className="absolute top-0 left-0 right-0 h-7 flex items-center px-3 text-[12px] border-b border-[var(--color-border)] bg-[var(--color-bg-elev)] z-50 no-select">
       <div className="flex items-center gap-3">
         <span className="text-[var(--color-phosphor-bright)]">●</span>
-        <span>ed@rocapine.os</span>
+        <span>ed@personal.os</span>
         <span className="text-[var(--color-phosphor-faint)]">·</span>
         <span className="text-[var(--color-phosphor-dim)]">v1.0.0</span>
       </div>

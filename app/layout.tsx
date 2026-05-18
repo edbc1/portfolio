@@ -17,13 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "rocapine/os — ed boucas",
+  title: "personal/os — ed bucaille",
   description:
-    "Portfolio of Ed Boucas — design engineer. Built as a fictional operating system.",
+    "Portfolio of Ed Bucaille — design engineer. Built as a fictional operating system.",
   openGraph: {
-    title: "rocapine/os — ed boucas",
+    title: "personal/os — ed bucaille",
     description:
-      "Portfolio of Ed Boucas — design engineer. Built as a fictional operating system.",
+      "Portfolio of Ed Bucaille — design engineer. Built as a fictional operating system.",
     type: "website",
   },
 };

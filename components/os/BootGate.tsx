@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { BootScreen } from "./BootScreen";
 
-const STORAGE_KEY = "rocapine-os-booted";
+const STORAGE_KEY = "personal-os-booted";
 
 export function BootGate({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);

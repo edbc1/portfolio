@@ -81,7 +81,7 @@ export function FileTree() {
   return (
     <aside className="absolute left-0 top-7 bottom-7 w-56 border-r border-[var(--color-border)] bg-[var(--color-bg-elev)] py-3 overflow-y-auto scroll-hidden z-30 no-select">
       <div className="px-3 mb-3 text-[var(--color-phosphor-bright)]">
-        <div className="text-[14px] tracking-[0.08em] uppercase">Rocapine/OS</div>
+        <div className="text-[14px] tracking-[0.08em] uppercase">Personal/OS</div>
         <div className="text-[10px] text-[var(--color-phosphor-faint)] mt-0.5">
           ─────────────
         </div>

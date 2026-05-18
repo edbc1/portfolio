@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 const lines: { text: string; delay: number; trailing?: string }[] = [
-  { text: "ROCAPINE/OS  v1.0.0", delay: 0 },
-  { text: "Copyright (c) 2026 Ed Boucas", delay: 80 },
+  { text: "PERSONAL/OS  v1.0.0", delay: 0 },
+  { text: "Copyright (c) 2026 Ed Bucaille", delay: 80 },
   { text: "─────────────────────────────────────", delay: 160 },
   { text: "", delay: 200 },
   { text: "POST", delay: 280 },
