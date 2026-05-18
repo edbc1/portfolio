@@ -1,36 +1,52 @@
 export function About() {
   return (
     <article>
-      <h1>ed boucas</h1>
+      <h1>ed bucaille</h1>
       <p className="text-[var(--color-phosphor-dim)] mt-1 mb-4">
         design engineer · paris
       </p>
 
       <p>
-        I build products where the design and the code are the same craft.
-        Mostly mobile and web. Mostly working alone or with very small teams.
-        I&apos;ve been shipping things on the internet for a while now.
+        I design and build products end-to-end. Brand, interface, code,
+        motion — all the same job to me. I work best with small teams or
+        solo, on things where the line between design and engineering needs
+        to disappear.
       </p>
 
       <p>
-        I care about typography, motion, response time, and the feeling that a
-        product was made by someone who actually used it.
+        I run a small practice called <strong>0 — TO — 1</strong>: a focused
+        engagement to design and ship a core feature in about a week. I
+        partner with founders and product teams who have a strong vision and
+        need someone who can hold both halves of the job at once.
       </p>
 
-      <h2>currently</h2>
+      <h2>recent work</h2>
       <ul>
         <li>
-          building <strong>rocapine</strong>, an iOS app for habits that
-          don&apos;t feel like homework
+          <strong>Pimento</strong> — GenAI moodboard tool, Paris (2024 —)
         </li>
-        <li>writing a small operating system for this portfolio</li>
-        <li>looking for work that lets me do both halves of the job</li>
+        <li>
+          <strong>Tocco</strong> — sustainable materials marketplace
+          (2023 — 2024)
+        </li>
+        <li>
+          <strong>Tadaa</strong> — designops workflow tool (2022 — 2023)
+        </li>
+        <li>
+          <strong>RDV</strong> — events &amp; places B2C app (2022 — 2023)
+        </li>
+        <li>
+          <strong>Sourceful</strong> — sustainable packaging B2B
+          platform (2021 — 2022)
+        </li>
       </ul>
 
-      <h2>previously</h2>
+      <h2>how I work</h2>
       <ul>
-        <li>full-stack engineer & designer at several small product teams</li>
-        <li>freelance design + engineering</li>
+        <li>design and engineering in the same pass, not in handoff</li>
+        <li>small surface area, high quality bar</li>
+        <li>ship in days, refine in weeks</li>
+        <li>the prototype is the spec</li>
       </ul>
 
       <h2>contact</h2>
@@ -39,11 +55,20 @@ export function About() {
           <a href="mailto:ed@rocapine.com">ed@rocapine.com</a>
         </li>
         <li>
-          <a href="https://github.com/edbc1" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/edbc1"
+            target="_blank"
+            rel="noreferrer"
+          >
             github.com/edbc1
           </a>
         </li>
       </ul>
+
+      <p className="text-[var(--color-phosphor-faint)] mt-6 text-[11px]">
+        [draft] Bio drafted from your old portfolio + this session — edit
+        anything that doesn&apos;t sound like you.
+      </p>
     </article>
   );
 }

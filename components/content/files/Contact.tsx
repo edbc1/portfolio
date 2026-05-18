@@ -13,7 +13,6 @@ echo "hello, my name is ed."
 echo "if you want to talk:"
 echo ""
 echo "  email   ed@rocapine.com"
-echo "  twitter @edbc1"
 echo "  github  edbc1"
 echo ""
 echo "I read everything. I reply to most things."`}
@@ -21,14 +20,19 @@ echo "I read everything. I reply to most things."`}
 
       <p>
         Best way to reach me is{" "}
-        <a href="mailto:ed@rocapine.com">ed@rocapine.com</a>. I&apos;m
-        especially interested in:
+        <a href="mailto:ed@rocapine.com">ed@rocapine.com</a>. I&apos;m open
+        to:
       </p>
 
       <ul>
-        <li>design engineering roles where the line between the two is thin</li>
-        <li>founding-engineer or design-engineer #1 at small teams</li>
-        <li>collaborations on weird, small, well-crafted things</li>
+        <li>
+          <strong>0 — TO — 1 engagements</strong>: design + ship a core
+          feature in a week
+        </li>
+        <li>founding-engineer or design-engineer #1 roles at small teams</li>
+        <li>
+          longer collaborations on weird, small, well-crafted things
+        </li>
       </ul>
     </article>
   );

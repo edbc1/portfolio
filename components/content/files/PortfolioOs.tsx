@@ -44,6 +44,19 @@ export function PortfolioOs() {
         <li>view-source button on every window</li>
       </ul>
 
+      <h2>links</h2>
+      <ul>
+        <li>
+          <a
+            href="https://github.com/edbc1/portfolio"
+            target="_blank"
+            rel="noreferrer"
+          >
+            github.com/edbc1/portfolio
+          </a>
+        </li>
+      </ul>
+
       <p className="text-[var(--color-phosphor-faint)] mt-4 text-[11px]">
         This file is the site explaining itself. That&apos;s the point.
       </p>

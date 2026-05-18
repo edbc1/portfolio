@@ -4,9 +4,13 @@ import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
   return [
+    { slug: "pimento" },
+    { slug: "tocco" },
+    { slug: "tadaa" },
+    { slug: "rdv" },
+    { slug: "sourceful" },
+    { slug: "ride-on" },
     { slug: "rocapine" },
-    { slug: "customer-support" },
-    { slug: "website" },
     { slug: "portfolio-os" },
   ];
 }

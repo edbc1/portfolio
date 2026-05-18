@@ -1,16 +1,24 @@
 import { About } from "./files/About";
 import { Contact } from "./files/Contact";
+import { Pimento } from "./files/Pimento";
+import { Tocco } from "./files/Tocco";
+import { Tadaa } from "./files/Tadaa";
+import { Rdv } from "./files/Rdv";
+import { Sourceful } from "./files/Sourceful";
+import { RideOn } from "./files/RideOn";
 import { Rocapine } from "./files/Rocapine";
-import { CustomerSupport } from "./files/CustomerSupport";
-import { Website } from "./files/Website";
 import { PortfolioOs } from "./files/PortfolioOs";
 
 const registry: Record<string, () => React.ReactNode> = {
   about: About,
   contact: Contact,
+  "projects/pimento": Pimento,
+  "projects/tocco": Tocco,
+  "projects/tadaa": Tadaa,
+  "projects/rdv": Rdv,
+  "projects/sourceful": Sourceful,
+  "projects/ride-on": RideOn,
   "projects/rocapine": Rocapine,
-  "projects/customer-support": CustomerSupport,
-  "projects/website": Website,
   "projects/portfolio-os": PortfolioOs,
 };
 
