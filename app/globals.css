@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-phosphor: #7dff7d;
-  --color-phosphor-bright: #c4ffc4;
-  --color-phosphor-dim: #4caa4c;
-  --color-phosphor-faint: #2a6a2a;
-  --color-phosphor-ghost: #1a4a1a;
-  --color-bg: #030803;
-  --color-bg-elev: #061306;
-  --color-bg-window: #071a07;
-  --color-bg-titlebar: #0d2a0d;
-  --color-border: #2a6a2a;
-  --color-border-bright: #4caa4c;
+  --color-phosphor: #ffffff;
+  --color-phosphor-bright: #ffffff;
+  --color-phosphor-dim: #b8b8b8;
+  --color-phosphor-faint: #888888;
+  --color-phosphor-ghost: #1f1f1f;
+  --color-bg: #000000;
+  --color-bg-elev: #0a0a0a;
+  --color-bg-window: #0d0d0d;
+  --color-bg-titlebar: #141414;
+  --color-border: #333333;
+  --color-border-bright: #888888;
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
 }
@@ -27,89 +27,15 @@
     height: 100%;
   }
 
-  body {
-    text-shadow: 0 0 1px currentColor, 0 0 5px rgba(125, 255, 125, 0.25);
-  }
-
   ::selection {
-    background: var(--color-phosphor);
-    color: var(--color-bg);
-    text-shadow: none;
+    background: #ffffff;
+    color: #000000;
   }
 
   button, a {
     cursor: pointer;
   }
 }
-
-/* CRT scanlines */
-.crt-scanlines {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9997;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 2px,
-    rgba(0, 0, 0, 0.18) 3px
-  );
-  mix-blend-mode: multiply;
-}
-
-/* CRT vignette */
-.crt-vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 30%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
-}
-
-/* CRT subtle bloom */
-.crt-bloom {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9996;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(125, 255, 125, 0.04) 0%,
-    transparent 60%
-  );
-  mix-blend-mode: screen;
-}
-
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  92% { opacity: 0.985; }
-  94% { opacity: 1; }
-  96% { opacity: 0.965; }
-  97% { opacity: 1; }
-}
-.crt-flicker { animation: flicker 11s infinite; }
-
-@keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-.cursor-blink::after {
-  content: "\2588";
-  display: inline-block;
-  margin-left: 2px;
-  animation: blink 1s steps(1) infinite;
-}
-
-@keyframes boot-flash {
-  0% { opacity: 0; }
-  3% { opacity: 1; }
-  100% { opacity: 1; }
-}
-.boot-flash { animation: boot-flash 0.4s ease-out; }
 
 /* Hide scrollbars but allow scroll */
 .scroll-hidden::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -120,112 +46,7 @@
 }
 .scroll-hidden::-webkit-scrollbar-thumb:hover { background: var(--color-phosphor-dim); }
 
-/* Window focus glow */
-.window-focused {
-  box-shadow:
-    0 0 0 1px var(--color-phosphor-bright),
-    0 0 24px rgba(125, 255, 125, 0.15),
-    0 8px 24px rgba(0, 0, 0, 0.6);
-}
-.window-unfocused {
-  box-shadow:
-    0 0 0 1px var(--color-phosphor-faint),
-    0 4px 16px rgba(0, 0, 0, 0.5);
-  opacity: 0.88;
-}
-
-/* Prose inside MDX content windows */
-.prose-os h1 {
-  font-size: 18px;
-  color: var(--color-phosphor-bright);
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  margin-bottom: 4px;
-}
-.prose-os h1::after {
-  content: "";
-  display: block;
-  border-bottom: 1px solid var(--color-border-bright);
-  width: 100%;
-  margin-top: 2px;
-}
-.prose-os h2 {
-  font-size: 14px;
-  color: var(--color-phosphor-bright);
-  margin-top: 18px;
-  margin-bottom: 6px;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-}
-.prose-os h2::before { content: "## "; color: var(--color-phosphor-dim); }
-.prose-os p { margin-bottom: 10px; max-width: 64ch; }
-.prose-os ul { margin-bottom: 10px; }
-.prose-os li { padding-left: 16px; position: relative; }
-.prose-os li::before {
-  content: "▸";
-  position: absolute;
-  left: 0;
-  color: var(--color-phosphor-dim);
-}
-.prose-os a {
-  color: var(--color-phosphor-bright);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--color-phosphor-faint);
-}
-.prose-os a:hover { text-decoration-color: var(--color-phosphor-bright); }
-.prose-os strong { color: var(--color-phosphor-bright); }
-.prose-os code {
-  background: var(--color-bg-titlebar);
-  padding: 1px 5px;
-  border-radius: 2px;
-  font-size: 0.95em;
-}
-.prose-os hr {
-  border: 0;
-  border-top: 1px dashed var(--color-phosphor-faint);
-  margin: 20px 0;
-}
-
 .no-select {
   -webkit-user-select: none;
   user-select: none;
-}
-
-/* Terminal mode — overrides phosphor green with neutral white */
-.terminal-mode {
-  --color-phosphor: #ffffff;
-  --color-phosphor-bright: #ffffff;
-  --color-phosphor-dim: #b8b8b8;
-  --color-phosphor-faint: #888888;
-  --color-phosphor-ghost: #1f1f1f;
-  --color-bg: #000000;
-  --color-bg-elev: #0a0a0a;
-  --color-bg-window: #0d0d0d;
-  --color-bg-titlebar: #141414;
-  --color-border: #333333;
-  --color-border-bright: #888888;
-  text-shadow: none;
-  color: var(--color-phosphor);
-}
-.terminal-mode ::selection {
-  background: #ffffff;
-  color: #000000;
-  text-shadow: none;
-}
-
-/* Terminal mode: kill every CRT effect so white text stays clean white.
-   The vignette sits at z-index 9998 — over the text — and rgba(0,0,0,0.55)
-   at its edges darkens white into grey. Hide all three overlays. */
-body:has(.terminal-mode) .crt-scanlines,
-body:has(.terminal-mode) .crt-bloom,
-body:has(.terminal-mode) .crt-vignette {
-  display: none;
-}
-body:has(.terminal-mode).crt-flicker {
-  animation: none;
-}
-.terminal-mode,
-.terminal-mode * {
-  text-shadow: none !important;
 }

@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useReducer } from "react";
 import { TerminalPane } from "./TerminalPane";
-import { ViewerPane } from "./ViewerPane";
 import { projects, routes, type TermOption, type TermProject } from "@/lib/terminal-content";
 
 export type HistoryBlock =
@@ -16,14 +15,20 @@ export type HistoryBlock =
 type State = {
   history: HistoryBlock[];
   cwd: string;
-  gallery: { projectId: string; index: number } | null;
+  projectView: string | null;
 };
+
+function nextProjectId(currentId: string): string | null {
+  const ids = (routes.work?.options ?? [])
+    .map((o) => o.command.replace(/^open\s+/, ""))
+    .filter((id) => projects[id]);
+  const idx = ids.indexOf(currentId);
+  if (idx === -1) return null;
+  return ids[(idx + 1) % ids.length];
+}
 
 type Action =
   | { type: "submit"; text: string }
-  | { type: "navigate-gallery"; direction: -1 | 1 }
-  | { type: "set-gallery-index"; index: number }
-  | { type: "close-gallery" }
   | { type: "init" };
 
 const EMAIL = "edouard.bucaille@gmail.com";
@@ -41,7 +46,7 @@ const greet = (routeId: string): HistoryBlock[] => {
 const initialState: State = {
   history: greet("root"),
   cwd: "root",
-  gallery: null,
+  projectView: null,
 };
 
 function cwdLabel(cwd: string): string {
@@ -53,23 +58,6 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "init":
       return initialState;
-
-    case "close-gallery":
-      return { ...state, gallery: null };
-
-    case "navigate-gallery": {
-      if (!state.gallery) return state;
-      const p = projects[state.gallery.projectId];
-      if (!p) return state;
-      const len = p.images.length;
-      const next = (state.gallery.index + action.direction + len) % len;
-      return { ...state, gallery: { ...state.gallery, index: next } };
-    }
-
-    case "set-gallery-index": {
-      if (!state.gallery) return state;
-      return { ...state, gallery: { ...state.gallery, index: action.index } };
-    }
 
     case "submit": {
       const raw = action.text.trim();
@@ -84,8 +72,18 @@ function reducer(state: State, action: Action): State {
       const numberMatch = raw.match(/^\d+$/);
       if (numberMatch) {
         const n = parseInt(raw, 10);
+        if (state.projectView) {
+          if (n === 1) return reducer(state, { type: "submit", text: "back" });
+          if (n === 2) {
+            const next = nextProjectId(state.projectView);
+            if (next) return reducer(state, { type: "submit", text: `open ${next}` });
+          }
+          return {
+            ...state,
+            history: [...history, { kind: "error", text: `no option [${n}] here. try \`help\` or click an option.` }],
+          };
+        }
         const opt = route?.options.find((o) => o.number === n);
-        // Skip the number echo — let the resolved command decide what to print.
         if (opt) return reducer(state, { type: "submit", text: opt.command });
         return {
           ...state,
@@ -107,7 +105,7 @@ function reducer(state: State, action: Action): State {
                 "commands:",
                 "  <number>           pick a menu option",
                 "  ls                 list options here",
-                "  open <project>     open a project + gallery",
+                "  open <project>     open a project + images",
                 "  back  /  cd ..     go up one level",
                 "  clear              clear the screen",
                 "  email / linkedin   open mail / linkedin",
@@ -122,15 +120,27 @@ function reducer(state: State, action: Action): State {
       }
 
       if (cmd === "clear" || cmd === "cls") {
-        return { ...state, history: greet(state.cwd) };
+        return { ...state, projectView: null, history: greet(state.cwd) };
       }
 
       if (cmd === "ls" || cmd === "dir") {
         if (!route) return state;
-        return { ...state, history: [...history, { kind: "menu", options: route.options, routeId: state.cwd }] };
+        return {
+          ...state,
+          projectView: null,
+          history: [...history, { kind: "menu", options: route.options, routeId: state.cwd }],
+        };
       }
 
       if (cmd === "back" || raw === "cd .." || cmd === "..") {
+        if (state.projectView) {
+          return {
+            ...state,
+            projectView: null,
+            cwd: "work",
+            history: [...history, ...greet("work")],
+          };
+        }
         const parent = route?.parent ?? "root";
         return {
           ...state,
@@ -178,11 +188,10 @@ function reducer(state: State, action: Action): State {
             history: [...history, { kind: "error", text: `no project "${projectId}". try \`work\` to see the list.` }],
           };
         }
-        // Skip even the input echo so the left side stays 100% static while
-        // the user flicks through projects. Visual feedback is the right pane.
         return {
           ...state,
-          gallery: { projectId, index: 0 },
+          projectView: projectId,
+          history: [...history, { kind: "project", project }],
         };
       }
 
@@ -190,6 +199,7 @@ function reducer(state: State, action: Action): State {
         return {
           ...state,
           cwd: cmd,
+          projectView: null,
           history: [...history, ...greet(cmd)],
         };
       }
@@ -210,59 +220,14 @@ export function Terminal() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const submit = useCallback((text: string) => dispatch({ type: "submit", text }), []);
-  const navGallery = useCallback(
-    (direction: -1 | 1) => dispatch({ type: "navigate-gallery", direction }),
-    [],
-  );
-  const setGalleryIndex = useCallback(
-    (index: number) => dispatch({ type: "set-gallery-index", index }),
-    [],
-  );
-  const closeGallery = useCallback(() => dispatch({ type: "close-gallery" }), []);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (!state.gallery) return;
-      const target = e.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) {
-        if (e.key === "Escape") closeGallery();
-        return;
-      }
-      if (e.key === "ArrowLeft") navGallery(-1);
-      if (e.key === "ArrowRight") navGallery(1);
-      if (e.key === "Escape") closeGallery();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [state.gallery, navGallery, closeGallery]);
-
-  const hasViewer = state.gallery !== null;
 
   return (
-    <div className="terminal-mode absolute inset-0 z-[60] bg-[var(--color-bg)] flex flex-col md:flex-row">
-      <div
-        className={`flex-1 min-h-0 overflow-hidden transition-[flex-basis] duration-200 ${
-          hasViewer
-            ? "md:basis-3/5 md:border-r border-b md:border-b-0 border-[var(--color-border)]"
-            : "md:basis-full"
-        }`}
-      >
-        <TerminalPane
-          history={state.history}
-          cwdLabel={cwdLabel(state.cwd)}
-          onSubmit={submit}
-        />
-      </div>
-      {hasViewer && (
-        <div className="flex-1 min-h-0 md:basis-2/5 overflow-hidden">
-          <ViewerPane
-            gallery={state.gallery!}
-            onNavigate={navGallery}
-            onSetIndex={setGalleryIndex}
-            onClose={closeGallery}
-          />
-        </div>
-      )}
+    <div className="absolute inset-0 z-[60] bg-[var(--color-bg)]">
+      <TerminalPane
+        history={state.history}
+        cwdLabel={cwdLabel(state.cwd)}
+        onSubmit={submit}
+      />
     </div>
   );
 }

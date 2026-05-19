@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { HistoryBlock } from "./Terminal";
-import type { TermOption, TermProject } from "@/lib/terminal-content";
+import { projects, routes, type TermOption, type TermProject } from "@/lib/terminal-content";
 
 export function TerminalPane({
   history,
@@ -48,7 +48,6 @@ export function TerminalPane({
     >
       <div className="mb-3 text-[var(--color-phosphor-dim)]">
         PERSONAL/OS  v2.0.0
-        <span className="text-[var(--color-phosphor-faint)]"> · terminal mode</span>
       </div>
 
       {(() => {
@@ -198,11 +197,26 @@ function ProjectBlock({
           </div>
         ))}
       </div>
-      <div className="text-[var(--color-phosphor-faint)] text-[12px] mb-1">
-        viewer ▸ {project.images.length} image{project.images.length !== 1 ? "s" : ""} on the right
-      </div>
+
+      {project.images.length > 0 && (
+        <div className="mb-3 -mx-4 md:-mx-6">
+          <div className="flex gap-3 overflow-x-auto overflow-y-hidden scroll-hidden px-4 md:px-6 pb-2">
+            {project.images.map((img, i) => (
+              <ImageTile
+                key={i}
+                src={img.src}
+                alt={img.alt ?? img.caption}
+                caption={img.caption}
+                index={i}
+                total={project.images.length}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       {project.links && project.links.length > 0 && (
-        <div className="mb-1">
+        <div className="mb-3">
           {project.links.map((l) => (
             <a
               key={l.url}
@@ -216,12 +230,123 @@ function ProjectBlock({
           ))}
         </div>
       )}
-      <button
-        onClick={() => onOption("back")}
-        className="text-[var(--color-phosphor-dim)] hover:text-[var(--color-phosphor-bright)] underline-offset-4 hover:underline mt-1"
-      >
-        ← back to work
-      </button>
+
+      <ProjectNav project={project} onOption={onOption} />
+    </div>
+  );
+}
+
+function ProjectNav({
+  project,
+  onOption,
+}: {
+  project: TermProject;
+  onOption: (cmd: string) => void;
+}) {
+  const workOpts = routes.work?.options ?? [];
+  const ids = workOpts
+    .map((o) => o.command.replace(/^open\s+/, ""))
+    .filter((id) => projects[id]);
+  const idx = ids.indexOf(project.id);
+  const nextId = idx >= 0 ? ids[(idx + 1) % ids.length] : null;
+  const next = nextId ? projects[nextId] : null;
+
+  const options: TermOption[] = [
+    { number: 1, command: "back", label: "back to work" },
+  ];
+  if (next) {
+    options.push({
+      number: 2,
+      command: `open ${next.id}`,
+      label: `next experience — ${next.title}`,
+    });
+  }
+
+  return (
+    <div className="mt-1">
+      {options.map((opt) => (
+        <OptionRow key={opt.number} opt={opt} onClick={() => onOption(opt.command)} />
+      ))}
+    </div>
+  );
+}
+
+function ImageTile({
+  src,
+  alt,
+  caption,
+  index,
+  total,
+}: {
+  src?: string;
+  alt: string;
+  caption: string;
+  index: number;
+  total: number;
+}) {
+  return (
+    <div className="shrink-0 w-[320px]">
+      <div className="relative w-full aspect-[4/3] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden">
+        {src ? (
+          /\.(mp4|webm|mov)$/i.test(src) ? (
+            <video
+              src={src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          )
+        ) : (
+          <TilePlaceholder label={caption} index={index} total={total} />
+        )}
+      </div>
+      <div className="text-[var(--color-phosphor-faint)] text-[11px] mt-2 leading-snug">
+        {caption}
+      </div>
+    </div>
+  );
+}
+
+function TilePlaceholder({
+  label,
+  index,
+  total,
+}: {
+  label: string;
+  index: number;
+  total: number;
+}) {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `linear-gradient(135deg, var(--color-phosphor-ghost) 25%, transparent 25%),
+                            linear-gradient(225deg, var(--color-phosphor-ghost) 25%, transparent 25%),
+                            linear-gradient(45deg, var(--color-phosphor-ghost) 25%, transparent 25%),
+                            linear-gradient(315deg, var(--color-phosphor-ghost) 25%, transparent 25%)`,
+          backgroundPosition: "12px 0, 12px 0, 0 0, 0 0",
+          backgroundSize: "24px 24px",
+          backgroundRepeat: "repeat",
+        }}
+      />
+      <div className="relative text-center px-3">
+        <div className="text-[var(--color-phosphor-faint)] text-[10px] uppercase tracking-[0.2em]">
+          {label}
+        </div>
+        <div className="text-[var(--color-phosphor-dim)] text-[12px] mt-1">
+          {index + 1} / {total}
+        </div>
+      </div>
     </div>
   );
 }

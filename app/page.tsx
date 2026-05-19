@@ -1,5 +1,5 @@
-import { Desktop } from "@/components/os/Desktop";
+import { Terminal } from "@/components/terminal/Terminal";
 
 export default function Home() {
-  return <Desktop initialOpen="about" />;
+  return <Terminal />;
 }
