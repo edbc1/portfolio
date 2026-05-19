@@ -57,7 +57,7 @@ export function TerminalPane({
           <div
             key={i}
             className="transition-opacity duration-300"
-            style={{ opacity: i < freshStart ? 0.55 : 1 }}
+            style={{ opacity: i < freshStart ? 0.32 : 1 }}
           >
             <HistoryRow block={block} onOption={runOption} />
           </div>
