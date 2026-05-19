@@ -171,8 +171,7 @@ export const routes: Record<string, TermRoute> = {
     options: [
       { number: 1, command: "about", label: "about", hint: "who i am, how i work" },
       { number: 2, command: "work", label: "work", hint: "recent projects + case studies" },
-      { number: 3, command: "play", label: "play", hint: "experiments + side things" },
-      { number: 4, command: "contact", label: "contact", hint: "email, cv, socials" },
+      { number: 3, command: "contact", label: "contact", hint: "email, cv, socials" },
     ],
   },
   work: {
