@@ -250,11 +250,6 @@ export const routes: Record<string, TermRoute> = {
     parent: "root",
     greeting: [
       "contact/",
-      "────────",
-      "[1] send an email",
-      "[2] open linkedin",
-      "[3] open github",
-      "[4] download cv",
     ],
     options: [
       { number: 1, command: "email", label: "send an email", hint: "opens your mail client" },
