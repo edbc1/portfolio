@@ -162,14 +162,6 @@ function ImageFrame({
         <Placeholder label={label} index={index} total={total} />
       )}
 
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.18) 3px)",
-          mixBlendMode: "multiply",
-        }}
-      />
     </div>
   );
 }
