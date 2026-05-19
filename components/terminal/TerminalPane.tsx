@@ -51,9 +51,18 @@ export function TerminalPane({
         <span className="text-[var(--color-phosphor-faint)]"> · terminal mode</span>
       </div>
 
-      {history.map((block, i) => (
-        <HistoryRow key={i} block={block} onOption={runOption} />
-      ))}
+      {(() => {
+        const freshStart = findFreshStart(history);
+        return history.map((block, i) => (
+          <div
+            key={i}
+            className="transition-opacity duration-300"
+            style={{ opacity: i < freshStart ? 0.55 : 1 }}
+          >
+            <HistoryRow block={block} onOption={runOption} />
+          </div>
+        ));
+      })()}
 
       <form onSubmit={handleSubmit} className="flex items-baseline gap-2 mt-1">
         <span className="text-[var(--color-phosphor-dim)] select-none">
@@ -74,6 +83,13 @@ export function TerminalPane({
       <div className="h-8" />
     </div>
   );
+}
+
+function findFreshStart(history: HistoryBlock[]): number {
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (history[i].kind === "input") return i;
+  }
+  return 0;
 }
 
 function HistoryRow({
