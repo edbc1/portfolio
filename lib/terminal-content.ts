@@ -165,7 +165,6 @@ export const routes: Record<string, TermRoute> = {
       "hey, thanks for stopping by.",
       "i'm ed — design engineer based in amsterdam,",
       "currently leading product & design at rocapine.",
-      "",
       "what would you like to know?",
     ],
     options: [
