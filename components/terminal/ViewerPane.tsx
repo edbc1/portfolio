@@ -20,27 +20,35 @@ export function ViewerPane({
   const total = project.images.length;
 
   return (
-    <div className="h-full flex flex-col px-4 py-3 md:px-6 md:py-5">
-      <div className="flex items-center justify-between text-[12px] text-[var(--color-phosphor-dim)] mb-3">
-        <span className="uppercase tracking-[0.08em]">
-          viewer · <span className="text-[var(--color-phosphor-bright)]">{project.title}</span>
-        </span>
-        <div className="flex items-center gap-3">
-          <span className="text-[var(--color-phosphor-faint)]">
-            {gallery.index + 1} / {total}
-          </span>
-          <button
-            onClick={onClose}
-            aria-label="close viewer"
-            className="hover:text-[var(--color-phosphor-bright)] border border-[var(--color-phosphor-faint)] hover:border-[var(--color-phosphor-bright)] px-1.5 py-0.5 rounded-sm leading-none"
-            title="close (esc)"
-          >
-            ✕ close
-          </button>
+    <div className="h-full flex flex-col px-4 py-3 md:px-6 md:py-5 overflow-y-auto scroll-hidden">
+      {/* header */}
+      <div className="flex items-center justify-between text-[12px] text-[var(--color-phosphor-dim)] mb-4">
+        <span className="uppercase tracking-[0.08em]">viewer</span>
+        <button
+          onClick={onClose}
+          aria-label="close viewer"
+          className="hover:text-[var(--color-phosphor-bright)] border border-[var(--color-phosphor-faint)] hover:border-[var(--color-phosphor-bright)] px-1.5 py-0.5 rounded-sm leading-none"
+          title="close (esc)"
+        >
+          ✕ close
+        </button>
+      </div>
+
+      {/* project meta */}
+      <div className="mb-4">
+        <div className="text-[var(--color-phosphor-bright)] text-[18px] tracking-[0.02em]">
+          {project.title}
+        </div>
+        <div className="text-[var(--color-phosphor-faint)] text-[12px] mt-0.5">
+          {project.year} · {project.tag}
+        </div>
+        <div className="text-[var(--color-phosphor)] text-[14px] leading-[1.6] mt-3">
+          {project.oneLiner}
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 flex items-center justify-center">
+      {/* image */}
+      <div className="flex items-center justify-center my-2">
         <ImageFrame
           src={image.src}
           alt={image.alt ?? image.caption}
@@ -50,8 +58,12 @@ export function ViewerPane({
         />
       </div>
 
-      <div className="mt-3 text-center text-[var(--color-phosphor-bright)]">{image.caption}</div>
+      {/* caption */}
+      <div className="text-center text-[var(--color-phosphor)] text-[13px] mt-3">
+        {image.caption}
+      </div>
 
+      {/* gallery controls */}
       <div className="mt-3 flex items-center justify-between text-[12px] text-[var(--color-phosphor-dim)]">
         <button
           onClick={() => onNavigate(-1)}
@@ -63,6 +75,9 @@ export function ViewerPane({
         </button>
 
         <div className="flex items-center gap-1.5">
+          <span className="text-[var(--color-phosphor-faint)] mr-2">
+            {gallery.index + 1} / {total}
+          </span>
           {project.images.map((_, i) => (
             <button
               key={i}
@@ -87,8 +102,35 @@ export function ViewerPane({
         </button>
       </div>
 
-      <div className="mt-2 text-center text-[10px] text-[var(--color-phosphor-faint)]">
-        ← → to navigate · esc to close
+      {/* body */}
+      <div className="mt-6 text-[14px] leading-[1.7]">
+        {project.body.map((line, i) => (
+          <div key={i} className="mb-2 flex gap-2">
+            <span className="text-[var(--color-phosphor-faint)] shrink-0">·</span>
+            <span>{line}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* links */}
+      {project.links && project.links.length > 0 && (
+        <div className="mt-5 pt-4 border-t border-[var(--color-border)]">
+          {project.links.map((l) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-[var(--color-phosphor-bright)] underline underline-offset-4 decoration-[var(--color-phosphor-faint)] hover:decoration-[var(--color-phosphor-bright)] mr-4 text-[13px]"
+            >
+              {l.label} →
+            </a>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-6 text-center text-[10px] text-[var(--color-phosphor-faint)]">
+        ← → to navigate · esc to close · 1–{Object.keys(projects).length} to switch project
       </div>
     </div>
   );

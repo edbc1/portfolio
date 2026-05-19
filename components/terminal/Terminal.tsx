@@ -85,7 +85,8 @@ function reducer(state: State, action: Action): State {
       if (numberMatch) {
         const n = parseInt(raw, 10);
         const opt = route?.options.find((o) => o.number === n);
-        if (opt) return reducer({ ...state, history }, { type: "submit", text: opt.command });
+        // Skip the number echo — let the resolved command decide what to print.
+        if (opt) return reducer(state, { type: "submit", text: opt.command });
         return {
           ...state,
           history: [...history, { kind: "error", text: `no option [${n}] here. try \`help\` or click an option.` }],
@@ -177,9 +178,10 @@ function reducer(state: State, action: Action): State {
             history: [...history, { kind: "error", text: `no project "${projectId}". try \`work\` to see the list.` }],
           };
         }
+        // Skip even the input echo so the left side stays 100% static while
+        // the user flicks through projects. Visual feedback is the right pane.
         return {
           ...state,
-          history: [...history, { kind: "project", project }],
           gallery: { projectId, index: 0 },
         };
       }

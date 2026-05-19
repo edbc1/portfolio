@@ -213,3 +213,22 @@
   color: #000000;
   text-shadow: none;
 }
+
+/* Terminal mode: neutralise CRT overlays so they don't tint or darken white */
+.terminal-mode .crt-bloom {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 60%
+  );
+}
+.terminal-mode .crt-scanlines {
+  display: none;
+}
+.terminal-mode .crt-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
