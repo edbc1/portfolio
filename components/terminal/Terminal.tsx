@@ -200,7 +200,7 @@ export function Terminal() {
   }, [state.gallery, navGallery]);
 
   return (
-    <div className="absolute inset-0 z-[60] bg-[var(--color-bg)] flex flex-col md:flex-row">
+    <div className="terminal-mode absolute inset-0 z-[60] bg-[var(--color-bg)] flex flex-col md:flex-row">
       <div className="flex-1 min-h-0 md:basis-3/5 md:border-r border-b md:border-b-0 border-[var(--color-border)] overflow-hidden">
         <TerminalPane
           history={state.history}

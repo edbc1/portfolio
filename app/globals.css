@@ -191,3 +191,25 @@
   -webkit-user-select: none;
   user-select: none;
 }
+
+/* Terminal mode — overrides phosphor green with neutral white */
+.terminal-mode {
+  --color-phosphor: #e6e6e6;
+  --color-phosphor-bright: #ffffff;
+  --color-phosphor-dim: #8a8a8a;
+  --color-phosphor-faint: #555555;
+  --color-phosphor-ghost: #1f1f1f;
+  --color-bg: #000000;
+  --color-bg-elev: #0a0a0a;
+  --color-bg-window: #0d0d0d;
+  --color-bg-titlebar: #141414;
+  --color-border: #2a2a2a;
+  --color-border-bright: #555555;
+  text-shadow: 0 0 1px currentColor, 0 0 4px rgba(255, 255, 255, 0.12);
+  color: var(--color-phosphor);
+}
+.terminal-mode ::selection {
+  background: #ffffff;
+  color: #000000;
+  text-shadow: none;
+}

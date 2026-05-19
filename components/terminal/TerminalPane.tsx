@@ -131,7 +131,7 @@ function HistoryRow({
 
     case "error":
       return (
-        <div className="mb-2 text-[#ff9b9b]">
+        <div className="mb-2 text-[#d97a7a]">
           <span className="text-[var(--color-phosphor-faint)]">!</span> {block.text}
         </div>
       );

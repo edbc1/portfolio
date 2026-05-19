@@ -112,7 +112,6 @@ function ImageFrame({
           src={src}
           alt={alt}
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: "contrast(1.05) saturate(0.85) sepia(0.05) hue-rotate(60deg)" }}
         />
       ) : (
         <Placeholder label={label} index={index} total={total} />
