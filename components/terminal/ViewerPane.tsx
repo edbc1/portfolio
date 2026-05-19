@@ -1,34 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { projects } from "@/lib/terminal-content";
 
 export function ViewerPane({
   gallery,
   onNavigate,
   onSetIndex,
+  onClose,
 }: {
-  gallery: { projectId: string; index: number } | null;
+  gallery: { projectId: string; index: number };
   onNavigate: (direction: -1 | 1) => void;
   onSetIndex: (index: number) => void;
+  onClose: () => void;
 }) {
-  if (!gallery) return <EmptyViewer />;
-
   const project = projects[gallery.projectId];
-  if (!project) return <EmptyViewer />;
+  if (!project) return null;
 
   const image = project.images[gallery.index];
   const total = project.images.length;
 
   return (
     <div className="h-full flex flex-col px-4 py-3 md:px-6 md:py-5">
-      <div className="flex items-baseline justify-between text-[12px] text-[var(--color-phosphor-dim)] mb-3">
+      <div className="flex items-center justify-between text-[12px] text-[var(--color-phosphor-dim)] mb-3">
         <span className="uppercase tracking-[0.08em]">
           viewer · <span className="text-[var(--color-phosphor-bright)]">{project.title}</span>
         </span>
-        <span className="text-[var(--color-phosphor-faint)]">
-          {gallery.index + 1} / {total}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-[var(--color-phosphor-faint)]">
+            {gallery.index + 1} / {total}
+          </span>
+          <button
+            onClick={onClose}
+            aria-label="close viewer"
+            className="hover:text-[var(--color-phosphor-bright)] border border-[var(--color-phosphor-faint)] hover:border-[var(--color-phosphor-bright)] px-1.5 py-0.5 rounded-sm leading-none"
+            title="close (esc)"
+          >
+            ✕ close
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 min-h-0 flex items-center justify-center">
@@ -79,7 +88,7 @@ export function ViewerPane({
       </div>
 
       <div className="mt-2 text-center text-[10px] text-[var(--color-phosphor-faint)]">
-        ← → to navigate
+        ← → to navigate · esc to close
       </div>
     </div>
   );
@@ -100,12 +109,6 @@ function ImageFrame({
 }) {
   return (
     <div className="relative w-full max-w-[520px] aspect-[4/3] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden">
-      {/* corner ticks */}
-      <Tick className="top-0 left-0 border-l border-t" />
-      <Tick className="top-0 right-0 border-r border-t" />
-      <Tick className="bottom-0 left-0 border-l border-b" />
-      <Tick className="bottom-0 right-0 border-r border-b" />
-
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -117,7 +120,6 @@ function ImageFrame({
         <Placeholder label={label} index={index} total={total} />
       )}
 
-      {/* scanline overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -127,15 +129,6 @@ function ImageFrame({
         }}
       />
     </div>
-  );
-}
-
-function Tick({ className }: { className: string }) {
-  return (
-    <span
-      className={`absolute w-3 h-3 border-[var(--color-phosphor-bright)] ${className}`}
-      style={{ borderWidth: 0 }}
-    />
   );
 }
 
@@ -171,47 +164,6 @@ function Placeholder({
         </div>
         <div className="text-[var(--color-phosphor-faint)] text-[10px] mt-3">
           [ no source image yet ]
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function EmptyViewer() {
-  const [pulse, setPulse] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setPulse((p) => (p + 1) % 1000), 1100);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <div className="h-full flex flex-col px-4 py-3 md:px-6 md:py-5">
-      <div className="text-[12px] uppercase tracking-[0.08em] text-[var(--color-phosphor-dim)] mb-3">
-        viewer · idle
-      </div>
-
-      <div className="flex-1 min-h-0 flex items-center justify-center">
-        <div className="text-center font-mono leading-tight select-none">
-          <pre className="text-[var(--color-phosphor-dim)] text-[10px] sm:text-[12px]">
-{`        ╔══════════════════╗
-        ║                  ║
-        ║    PERSONAL/OS   ║
-        ║                  ║
-        ║   ┌──────────┐   ║
-        ║   │  ▮ ▮ ▮   │   ║
-        ║   │          │   ║
-        ║   │   ░░░    │   ║
-        ║   └──────────┘   ║
-        ║                  ║
-        ╚══════════════════╝`}
-          </pre>
-          <div className="mt-4 text-[var(--color-phosphor-faint)] text-[11px]">
-            {"// no project open"}
-          </div>
-          <div className="text-[var(--color-phosphor-dim)] text-[11px] mt-1">
-            try <span className="text-[var(--color-phosphor-bright)]">[1] work</span> to see projects
-            <span className={pulse % 2 === 0 ? "opacity-100" : "opacity-0"}>_</span>
-          </div>
         </div>
       </div>
     </div>

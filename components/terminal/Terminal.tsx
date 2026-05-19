@@ -23,7 +23,12 @@ type Action =
   | { type: "submit"; text: string }
   | { type: "navigate-gallery"; direction: -1 | 1 }
   | { type: "set-gallery-index"; index: number }
+  | { type: "close-gallery" }
   | { type: "init" };
+
+const EMAIL = "edouard.bucaille@gmail.com";
+const LINKEDIN = "https://www.linkedin.com/in/edouardbucaille/";
+const CV_PATH = "/edouard-bucaille-cv.pdf";
 
 const greet = (routeId: string): HistoryBlock[] => {
   const route = routes[routeId];
@@ -48,6 +53,9 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "init":
       return initialState;
+
+    case "close-gallery":
+      return { ...state, gallery: null };
 
     case "navigate-gallery": {
       if (!state.gallery) return state;
@@ -101,6 +109,8 @@ function reducer(state: State, action: Action): State {
                 "  open <project>     open a project + gallery",
                 "  back  /  cd ..     go up one level",
                 "  clear              clear the screen",
+                "  email / linkedin   open mail / linkedin",
+                "  cv                 download cv (pdf)",
                 "  help               this",
                 "",
                 "tip: every option is clickable too.",
@@ -130,11 +140,31 @@ function reducer(state: State, action: Action): State {
 
       if (cmd === "email") {
         if (typeof window !== "undefined") {
-          window.location.href = "mailto:ed@rocapine.com";
+          window.location.href = `mailto:${EMAIL}`;
         }
         return {
           ...state,
-          history: [...history, { kind: "text", lines: ["opening mail client → ed@rocapine.com"] }],
+          history: [...history, { kind: "text", lines: [`opening mail client → ${EMAIL}`] }],
+        };
+      }
+
+      if (cmd === "linkedin") {
+        if (typeof window !== "undefined") {
+          window.open(LINKEDIN, "_blank", "noopener,noreferrer");
+        }
+        return {
+          ...state,
+          history: [...history, { kind: "text", lines: [`opening linkedin → ${LINKEDIN}`] }],
+        };
+      }
+
+      if (cmd === "cv" || cmd === "resume") {
+        if (typeof window !== "undefined") {
+          window.open(CV_PATH, "_blank", "noopener,noreferrer");
+        }
+        return {
+          ...state,
+          history: [...history, { kind: "text", lines: ["downloading cv (pdf) →"] }],
         };
       }
 
@@ -186,35 +216,51 @@ export function Terminal() {
     (index: number) => dispatch({ type: "set-gallery-index", index }),
     [],
   );
+  const closeGallery = useCallback(() => dispatch({ type: "close-gallery" }), []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!state.gallery) return;
       const target = e.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) {
+        if (e.key === "Escape") closeGallery();
+        return;
+      }
       if (e.key === "ArrowLeft") navGallery(-1);
       if (e.key === "ArrowRight") navGallery(1);
+      if (e.key === "Escape") closeGallery();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [state.gallery, navGallery]);
+  }, [state.gallery, navGallery, closeGallery]);
+
+  const hasViewer = state.gallery !== null;
 
   return (
     <div className="terminal-mode absolute inset-0 z-[60] bg-[var(--color-bg)] flex flex-col md:flex-row">
-      <div className="flex-1 min-h-0 md:basis-3/5 md:border-r border-b md:border-b-0 border-[var(--color-border)] overflow-hidden">
+      <div
+        className={`flex-1 min-h-0 overflow-hidden transition-[flex-basis] duration-200 ${
+          hasViewer
+            ? "md:basis-3/5 md:border-r border-b md:border-b-0 border-[var(--color-border)]"
+            : "md:basis-full"
+        }`}
+      >
         <TerminalPane
           history={state.history}
           cwdLabel={cwdLabel(state.cwd)}
           onSubmit={submit}
         />
       </div>
-      <div className="flex-1 min-h-0 md:basis-2/5 overflow-hidden">
-        <ViewerPane
-          gallery={state.gallery}
-          onNavigate={navGallery}
-          onSetIndex={setGalleryIndex}
-        />
-      </div>
+      {hasViewer && (
+        <div className="flex-1 min-h-0 md:basis-2/5 overflow-hidden">
+          <ViewerPane
+            gallery={state.gallery!}
+            onNavigate={navGallery}
+            onSetIndex={setGalleryIndex}
+            onClose={closeGallery}
+          />
+        </div>
+      )}
     </div>
   );
 }
