@@ -251,12 +251,10 @@ export const routes: Record<string, TermRoute> = {
     greeting: [
       "contact/",
       "────────",
-      "email      edouard.bucaille@gmail.com",
-      "linkedin   linkedin.com/in/edouardbucaille",
-      "github     github.com/edbc1",
-      "cv         download (pdf)",
-      "",
-      "best to email — i reply within a day.",
+      "[1] send an email",
+      "[2] open linkedin",
+      "[3] open github",
+      "[4] download cv",
     ],
     options: [
       { number: 1, command: "email", label: "send an email", hint: "opens your mail client" },
