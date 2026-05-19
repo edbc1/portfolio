@@ -99,9 +99,6 @@ function HistoryRow({
           {block.options.map((opt) => (
             <OptionRow key={opt.number} opt={opt} onClick={() => onOption(opt.command)} />
           ))}
-          <div className="text-[var(--color-phosphor-faint)] text-[12px] mt-1.5">
-            type a number, a name, or click an option · `help` for more
-          </div>
         </div>
       );
 
