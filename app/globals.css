@@ -46,6 +46,12 @@
 }
 .scroll-hidden::-webkit-scrollbar-thumb:hover { background: var(--color-phosphor-dim); }
 
+.scroll-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll-none::-webkit-scrollbar { display: none; }
+
 .no-select {
   -webkit-user-select: none;
   user-select: none;

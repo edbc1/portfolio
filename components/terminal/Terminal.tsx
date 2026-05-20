@@ -141,6 +141,12 @@ function reducer(state: State, action: Action): State {
             history: [...history, ...greet("work")],
           };
         }
+        if (state.cwd === "root") {
+          return {
+            ...state,
+            history: [...history, { kind: "error", text: "already at root." }],
+          };
+        }
         const parent = route?.parent ?? "root";
         return {
           ...state,

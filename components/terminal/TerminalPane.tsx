@@ -4,6 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { HistoryBlock } from "./Terminal";
 import { projects, routes, type TermOption, type TermProject } from "@/lib/terminal-content";
 
+type ZoomTarget = { src: string; alt: string; isVideo: boolean };
+
 export function TerminalPane({
   history,
   cwdLabel,
@@ -14,8 +16,23 @@ export function TerminalPane({
   onSubmit: (text: string) => void;
 }) {
   const [value, setValue] = useState("");
+  const [zoom, setZoom] = useState<ZoomTarget | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!zoom) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoom(null);
+    };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [zoom]);
 
   useLayoutEffect(() => {
     const el = scrollRef.current;
@@ -58,7 +75,7 @@ export function TerminalPane({
             className="transition-opacity duration-300"
             style={{ opacity: i < freshStart ? 0.32 : 1 }}
           >
-            <HistoryRow block={block} onOption={runOption} />
+            <HistoryRow block={block} onOption={runOption} onZoom={setZoom} />
           </div>
         ));
       })()}
@@ -80,6 +97,56 @@ export function TerminalPane({
       </form>
 
       <div className="h-8" />
+
+      {zoom && <Lightbox target={zoom} onClose={() => setZoom(null)} />}
+    </div>
+  );
+}
+
+function Lightbox({ target, onClose }: { target: ZoomTarget; onClose: () => void }) {
+  return (
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        onClose();
+      }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm px-4 py-8 md:px-12 md:py-12"
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        aria-label="close"
+        className="absolute top-4 right-4 text-[var(--color-phosphor-bright)] text-[12px] uppercase tracking-[0.2em] border border-[var(--color-border-bright)] px-2 py-1 hover:bg-[var(--color-phosphor-ghost)]"
+      >
+        [esc] close
+      </button>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative max-w-[min(1600px,95vw)] max-h-[88vh] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden flex"
+      >
+        {target.isVideo ? (
+          <video
+            src={target.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            className="max-w-[min(1600px,95vw)] max-h-[88vh] w-auto h-auto block"
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={target.src}
+            alt={target.alt}
+            className="max-w-[min(1600px,95vw)] max-h-[88vh] w-auto h-auto block"
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -94,9 +161,11 @@ function findFreshStart(history: HistoryBlock[]): number {
 function HistoryRow({
   block,
   onOption,
+  onZoom,
 }: {
   block: HistoryBlock;
   onOption: (cmd: string) => void;
+  onZoom: (t: ZoomTarget) => void;
 }) {
   switch (block.kind) {
     case "greeting":
@@ -139,7 +208,7 @@ function HistoryRow({
       );
 
     case "project":
-      return <ProjectBlock project={block.project} onOption={onOption} />;
+      return <ProjectBlock project={block.project} onOption={onOption} onZoom={onZoom} />;
 
     case "error":
       return (
@@ -174,9 +243,11 @@ function OptionRow({ opt, onClick }: { opt: TermOption; onClick: () => void }) {
 function ProjectBlock({
   project,
   onOption,
+  onZoom,
 }: {
   project: TermProject;
   onOption: (cmd: string) => void;
+  onZoom: (t: ZoomTarget) => void;
 }) {
   return (
     <div className="mb-3">
@@ -200,7 +271,7 @@ function ProjectBlock({
 
       {project.images.length > 0 && (
         <div className="mb-3 -mx-4 md:-mx-6">
-          <div className="flex gap-3 overflow-x-auto overflow-y-hidden scroll-hidden px-4 md:px-6 pb-2">
+          <div className="flex gap-3 overflow-x-auto overflow-y-hidden scroll-none px-4 md:px-6 pb-2">
             {project.images.map((img, i) => (
               <ImageTile
                 key={i}
@@ -209,6 +280,7 @@ function ProjectBlock({
                 caption={img.caption}
                 index={i}
                 total={project.images.length}
+                onZoom={onZoom}
               />
             ))}
           </div>
@@ -277,41 +349,59 @@ function ImageTile({
   caption,
   index,
   total,
+  onZoom,
 }: {
   src?: string;
   alt: string;
   caption: string;
   index: number;
   total: number;
+  onZoom: (t: ZoomTarget) => void;
 }) {
-  return (
-    <div className="shrink-0 w-[320px]">
-      <div className="relative w-full aspect-[4/3] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden">
-        {src ? (
-          /\.(mp4|webm|mov)$/i.test(src) ? (
-            <video
-              src={src}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={src}
-              alt={alt}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          )
-        ) : (
+  if (!src) {
+    return (
+      <div className="shrink-0 w-[280px]">
+        <div className="relative w-full aspect-[4/3] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden">
           <TilePlaceholder label={caption} index={index} total={total} />
+        </div>
+      </div>
+    );
+  }
+
+  const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+
+  return (
+    <div className="shrink-0">
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onZoom({ src, alt, isVideo });
+        }}
+        aria-label={`zoom: ${alt}`}
+        className="group relative h-[260px] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden inline-flex cursor-zoom-in p-0"
+      >
+        {isVideo ? (
+          <video
+            src={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-auto block pointer-events-none"
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt={alt}
+            className="h-full w-auto block pointer-events-none"
+          />
         )}
-      </div>
-      <div className="text-[var(--color-phosphor-faint)] text-[11px] mt-2 leading-snug">
-        {caption}
-      </div>
+        <span className="absolute bottom-1 right-1 text-[10px] uppercase tracking-[0.2em] text-[var(--color-phosphor-bright)] bg-black/60 px-1.5 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+          [+] zoom
+        </span>
+      </button>
     </div>
   );
 }
