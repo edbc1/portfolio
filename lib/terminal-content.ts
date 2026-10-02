@@ -152,6 +152,19 @@ export const projects: Record<string, TermProject> = {
     images: [],
     links: [{ label: "moipresident.org", url: "https://www.moipresident.org/" }],
   },
+  azom: {
+    id: "azom",
+    title: "azom studio",
+    year: "2026",
+    tag: "experiment",
+    oneLiner: "pick your studio — a tiered plan picker reimagined as rooms.",
+    body: [
+      "every artist starts somewhere: practice room, garage, underground, wooden hall.",
+      "hover a room to see it come alive. keyboard-first: ← → to browse, ↵ to enter.",
+    ],
+    images: [],
+    links: [{ label: "azom-studio.vercel.app", url: "https://azom-studio.vercel.app/" }],
+  },
   "ride-on": {
     id: "ride-on",
     title: "ride-on",
@@ -242,8 +255,9 @@ export const routes: Record<string, TermRoute> = {
     ],
     options: [
       projectOption(1, "moipresident"),
-      projectOption(2, "ride-on"),
-      { number: 3, command: "back", label: "back", hint: "return to main menu" },
+      projectOption(2, "azom"),
+      projectOption(3, "ride-on"),
+      { number: 4, command: "back", label: "back", hint: "return to main menu" },
     ],
   },
   contact: {
