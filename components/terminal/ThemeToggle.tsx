@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { pixelTransition } from "./pixelTransition";
 
 type Theme = "dark" | "light";
 
@@ -21,17 +22,13 @@ export function ThemeToggle() {
     const next: Theme = theme === "dark" ? "light" : "dark";
     const root = document.documentElement;
 
-    if (next === "light") root.dataset.theme = "light";
-    else delete root.dataset.theme;
-    try {
-      localStorage.setItem("theme", next);
-    } catch {}
-
-    // restart the e-ink refresh flash
-    root.classList.remove("eink-refresh");
-    void root.offsetWidth;
-    root.classList.add("eink-refresh");
-    window.setTimeout(() => root.classList.remove("eink-refresh"), 260);
+    pixelTransition(() => {
+      if (next === "light") root.dataset.theme = "light";
+      else delete root.dataset.theme;
+      try {
+        localStorage.setItem("theme", next);
+      } catch {}
+    });
   };
 
   return (

@@ -39,8 +39,8 @@ export const projects: Record<string, TermProject> = {
     oneLiner: "Founding designer in a mobile-app wellness studio shipping ~150 apps a year.",
     body: [
       "Leading the product & design team (6 people). We ship a new app every day.",
-      "To achieve this velocity, we build our own CLIs, skills and internal tools (we don't want dependencies) to productize app creation at scale.",
-      "The team is made of 100% AI builders moving away from Figma to work directly on Claude code.",
+      "To achieve this velocity, we build our own CLIs, skills and internal tools",
+      "The team is made of 100% AI builders moving from Figma to Claude code.",
     ],
     images: [],
     linksTitle: "Check our work",
@@ -59,7 +59,7 @@ export const projects: Record<string, TermProject> = {
     tag: "genai",
     oneLiner: "AI creativity tool to create, edit, and upscale any image with your branding. Often described as the French MidJourney. Acquired by Mistral AI in 2026.",
     body: [
-      "AI creativity tool to create, edit, and upscale any image with your branding. Often described as the French MidJourney. Acquired by Mistral AI in 2026.",
+      "AI creativity tool to create, edit, and upscale any image with your branding.", 
       "As part of a freelance gig, I was the sole designer, working on the generator + editor interface.",
       "Re-designed the whole website to iterate on the storytelling and get closer to Product Market Fit",
     ],

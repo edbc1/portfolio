@@ -45,16 +45,17 @@
   --color-selection-fg: #1a1a19;
 }
 
-/* e-ink page refresh: brief invert flash when the theme flips */
-@keyframes eink-refresh {
-  0%, 100% { filter: none; }
-  35%, 55% { filter: invert(1); }
+/* pixel dissolve: old snapshot stays put, new one is revealed by a stepped mask */
+.pixel-transition::view-transition-old(root),
+.pixel-transition::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
-html.eink-refresh body {
-  animation: eink-refresh 220ms steps(1, end);
-}
-@media (prefers-reduced-motion: reduce) {
-  html.eink-refresh body { animation: none; }
+.pixel-transition::view-transition-new(root) {
+  mask-image: linear-gradient(transparent, transparent);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  image-rendering: pixelated; /* keep the upscaled mask cells crisp */
 }
 
 @layer base {
