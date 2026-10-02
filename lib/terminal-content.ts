@@ -57,7 +57,7 @@ export const projects: Record<string, TermProject> = {
     title: "pimento (acq. by Mistral AI)",
     year: "2024",
     tag: "genai",
-    oneLiner: "AI creativity tool to create, edit, and upscale any image with your branding. Often described as the French MidJourney. Acquired by Mistral AI in 2026.",
+    oneLiner: "AI creativity tool to create, edit, and upscale any image with your branding",
     body: [
       "AI creativity tool to create, edit, and upscale any image with your branding.", 
       "As part of a freelance gig, I was the sole designer, working on the generator + editor interface.",
