@@ -12,7 +12,8 @@ export type TermProject = {
   oneLiner: string;
   body: string[];
   images: TermImage[];
-  links?: { label: string; url: string }[];
+  links?: { label: string; url: string; description?: string }[];
+  linksTitle?: string;
 };
 
 export type TermOption = {
@@ -25,7 +26,7 @@ export type TermOption = {
 export type TermRoute = {
   id: string;
   parent?: string;
-  greeting: string[];
+  greeting?: string[];
   options: TermOption[];
 };
 
@@ -34,46 +35,35 @@ export const projects: Record<string, TermProject> = {
     id: "rocapine",
     title: "rocapine",
     year: "2024 — now",
-    tag: "wellness · current",
-    oneLiner: "founding designer in a mobile-app wellness studio shipping ~150 apps a year.",
+    tag: "wellness",
+    oneLiner: "Founding designer in a mobile-app wellness studio shipping ~150 apps a year.",
     body: [
-      "leading the product & design team (6 people).",
-      "we ship a new app every ~2 hours — design system + tooling matter a lot.",
-      "currently focused on the pipeline from idea → published app.",
-      "",
-      "recent apps shipped:",
+      "Leading the product & design team (6 people). We ship a new app every day.",
+      "To achieve this velocity, we build our own CLIs, skills and internal tools (we don't want dependencies) to productize app creation at scale.",
+      "The team is made of 100% AI builders moving away from Figma to work directly on Claude code.",
     ],
-    images: [
-      { src: "/projects/rocapine/harmony.png", caption: "harmony" },
-      { src: "/projects/rocapine/eve.png", caption: "eve" },
-      { src: "/projects/rocapine/unchaind.png", caption: "unchaind" },
-      { src: "/projects/rocapine/oly.png", caption: "oly" },
-      { src: "/projects/rocapine/img1.png", caption: "design system" },
-    ],
+    images: [],
+    linksTitle: "Check our work",
     links: [
-      { label: "rocapi.ne", url: "https://rocapi.ne/" },
-      { label: "harmony", url: "https://apps.apple.com/us/app/harmony-cycle-syncing-period/id6736703227" },
-      { label: "eve", url: "https://apps.apple.com/us/app/eve-motherhood-wellness-yoga/id6743140834" },
-      { label: "unchaind", url: "https://apps.apple.com/us/app/unchaind-overcome-lust/id6741046019" },
-      { label: "oly", url: "https://apps.apple.com/us/app/oly-personal-fitness-coach/id6738780947" },
+      { label: "oly", url: "https://apps.apple.com/us/app/oly-personal-fitness-coach/id6738780947", description: "personal fitness coach" },
+      { label: "harmony", url: "https://apps.apple.com/us/app/harmony-cycle-syncing-period/id6736703227", description: "cycle syncing & period tracking" },
+      { label: "eve", url: "https://apps.apple.com/us/app/eve-motherhood-wellness/id6743140834", description: "wellness through motherhood" },
+      { label: "victus", url: "https://apps.apple.com/us/app/victus-hyrox-training-plans/id6752902804", description: "hyrox training plans" },
+      { label: "rocapi.ne", url: "https://rocapi.ne/", description: "company website I built" },
     ],
   },
   pimento: {
     id: "pimento",
-    title: "pimento",
+    title: "pimento (acq. by Mistral AI)",
     year: "2024",
     tag: "genai",
-    oneLiner: "ai creativity tool to create, edit, and upscale any image with your branding.",
+    oneLiner: "AI creativity tool to create, edit, and upscale any image with your branding. Often described as the French MidJourney. Acquired by Mistral AI in 2026.",
     body: [
-      "led design on the generator + editor interface.",
-      "shipped a new user-experience to increase conversion rate (using industry-specific templates to get users faster to AHA moment).",
-      "re-designed the website to increase SEO.",
+      "AI creativity tool to create, edit, and upscale any image with your branding. Often described as the French MidJourney. Acquired by Mistral AI in 2026.",
+      "As part of a freelance gig, I was the sole designer, working on the generator + editor interface.",
+      "Re-designed the whole website to iterate on the storytelling and get closer to Product Market Fit",
     ],
-    images: [
-      { src: "/projects/pimento/img-1.avif", caption: "platform overview" },
-      { src: "/projects/pimento/2.png", caption: "onboarding" },
-      { src: "/projects/pimento/pimento.mp4", caption: "editor demo" },
-    ],
+    images: [],
     links: [{ label: "pimento.design", url: "https://www.pimento.design/" }],
   },
   tocco: {
@@ -81,20 +71,13 @@ export const projects: Record<string, TermProject> = {
     title: "tocco",
     year: "2023 — 24",
     tag: "sustainability",
-    oneLiner: "sustainable materials marketplace with a 5,000-material library.",
+    oneLiner: "sustainable materials marketplace with a 5,000-material library",
     body: [
-      "head of design & product — 1st employee, founding designer.",
-      "led sales, product & design. shipped the platform used by 100k+ users.",
-      "built the discovery flow + supplier↔brand co-development surface.",
+      "Head of design & product — 1st employee, founding designer post pre-seed ($1.4m)",
+      "Led sales, product & design. shipped the platform used by 100k+ users",
+      "Built the discovery flow + supplier↔brand co-development surface",
     ],
-    images: [
-      { src: "/projects/tocco/0.avif", caption: "platform header" },
-      { src: "/projects/tocco/1.png", caption: "library hero" },
-      { src: "/projects/tocco/2.png", caption: "discovery flow" },
-      { src: "/projects/tocco/3.png", caption: "supplier co-dev" },
-      { src: "/projects/tocco/4.png", caption: "sample box" },
-      { src: "/projects/tocco/5.png", caption: "marketplace" },
-    ],
+    images: [],
     links: [{ label: "tocco.earth", url: "https://tocco.earth/" }],
   },
   tadaa: {
@@ -102,11 +85,11 @@ export const projects: Record<string, TermProject> = {
     title: "tadaa",
     year: "2022 — 2023",
     tag: "saas · co-founder",
-    oneLiner: "tool to make any process actionable and collaborative.",
+    oneLiner: "tool to make any product team process actionable and collaborative.",
     body: [
-      "co-founder & cpo. managed a slack community of 450 product experts.",
-      "designed the product + design system (600+ users).",
-      "front-end engineering, sales, product & design.",
+      "Co-founder & CPO. managed a slack community of 450 product experts.",
+      "Designed the product + design system (600+ users).",
+      "Front-end engineering, sales, product & design.",
     ],
     images: [],
   },
@@ -135,16 +118,11 @@ export const projects: Record<string, TermProject> = {
     tag: "e-commerce",
     oneLiner: "sustainable b2b packaging with an in-house customisation tool.",
     body: [
-      "1st product designer — pm & designer dual role.",
+      "1st product designer role between Seed ($12m) and Series A ($20m).",
       "built the design practices and implemented processes.",
       "led the in-browser packaging configurator and quote flow.",
     ],
-    images: [
-      { src: "/projects/sourceful/img0.webp", caption: "packaging design" },
-      { src: "/projects/sourceful/img1.png", caption: "configurator" },
-      { src: "/projects/sourceful/img2.png", caption: "quote flow" },
-      { src: "/projects/sourceful/img3.png", caption: "packaging range" },
-    ],
+    images: [],
     links: [{ label: "sourceful.com", url: "https://www.sourceful.com/" }],
   },
   accenture: {
@@ -152,13 +130,27 @@ export const projects: Record<string, TermProject> = {
     title: "accenture",
     year: "2019 — 21",
     tag: "data · consulting",
-    oneLiner: "data consultant in london — early career stop before going design-first.",
+    oneLiner: "AI consultant in london — early career stop before going design-first.",
     body: [
-      "worked across data & analytics projects for enterprise clients.",
-      "learnt the discipline of structured thinking and stakeholder mgmt.",
-      "left to build product, but the rigour stuck.",
+      "Worked across AI, data & analytics projects for FTSE 100 enterprise clients.",
+      "Learnt the discipline of structured thinking and stakeholder mgmt.",
+      "Left to build product in a more challenging environment, but the rigour stuck.",
     ],
     images: [],
+    links: [{ label: "accenture.com", url: "https://www.accenture.com/" }],
+  },
+  moipresident: {
+    id: "moipresident",
+    title: "moi, président",
+    year: "2026",
+    tag: "side project",
+    oneLiner: "a fully costed presidential programme for france, 2027 — 2034.",
+    body: [
+      "30 policy areas, from democracy and justice to energy, ai and defence.",
+      "every measure budgeted: total cost vs. revenues & savings, with sources.",
+    ],
+    images: [],
+    links: [{ label: "moipresident.org", url: "https://www.moipresident.org/" }],
   },
   "ride-on": {
     id: "ride-on",
@@ -171,8 +163,12 @@ export const projects: Record<string, TermProject> = {
       "no real bikes were harmed.",
     ],
     images: [
-      { caption: "part picker" },
-      { caption: "3d preview" },
+      { src: "/projects/ride-on/1.webp", caption: "brand" },
+      { src: "/projects/ride-on/2.webp", caption: "homepage" },
+      { src: "/projects/ride-on/3.webp", caption: "configurator" },
+      { src: "/projects/ride-on/4.webp", caption: "wheels" },
+      { src: "/projects/ride-on/5.webp", caption: "drivetrain" },
+      { src: "/projects/ride-on/6.webp", caption: "size guide" },
     ],
   },
 };
@@ -192,46 +188,45 @@ export const routes: Record<string, TermRoute> = {
     id: "root",
     greeting: [
       "hey, thanks for stopping by.",
-      "i'm ed — design engineer based in amsterdam,",
-      "currently leading product & design at rocapine.",
+      "i'm ed, product designer with 7 years of exp.,",
+      "based in amsterdam, currently leading product & design at rocapine.",
       "what would you like to know?",
     ],
     options: [
       { number: 1, command: "about", label: "about", hint: "who i am, how i work" },
       { number: 2, command: "work", label: "work", hint: "recent projects + case studies" },
-      { number: 3, command: "contact", label: "contact", hint: "email, cv, socials" },
+      { number: 3, command: "playground", label: "playground", hint: "side projects + experiments" },
+      { number: 4, command: "contact", label: "contact", hint: "email, cv, socials" },
     ],
   },
   work: {
     id: "work",
     parent: "root",
-    greeting: ["work/ — current first, then most recent"],
     options: [
-      { number: 1, command: "open rocapine", label: "rocapine", hint: "2024 — current · wellness · lead product & design" },
-      { number: 2, command: "open pimento", label: "pimento", hint: "2024 · genai · freelance founding designer" },
-      { number: 3, command: "open tocco", label: "tocco", hint: "2023 — 24 · sustainability · founding designer" },
+      { number: 1, command: "open rocapine", label: "rocapine", hint: "2024 — current · consumer apps · lead product & design" },
+      { number: 2, command: "open pimento", label: "pimento (acq. by Mistral AI)", hint: "2024 · Genai · freelance founding designer" },
+      { number: 3, command: "open tocco", label: "tocco", hint: "2023 — 24 · marketplace · founding designer" },
       { number: 4, command: "open tadaa", label: "tadaa", hint: "2022 — 2023 · saas · co-founder & cpo" },
-      { number: 5, command: "open rdv", label: "rdv", hint: "2021 · branding & design · freelance" },
-      { number: 6, command: "open sourceful", label: "sourceful", hint: "2021 — 22 · e-commerce · founding designer" },
-      { number: 7, command: "open accenture", label: "accenture", hint: "2019 — 21 · data · consultant" },
+      { number: 5, command: "open rdv", label: "rdv", hint: "2021 · consumer · freelance designer" },
+      { number: 6, command: "open sourceful", label: "sourceful", hint: "2021 — 22 · marketplace · founding designer" },
+      { number: 7, command: "open accenture", label: "accenture", hint: "2019 — 21 · AI · consultant" },
     ],
   },
   about: {
     id: "about",
     parent: "root",
     greeting: [
-      "about/",
-      "─────",
-      "design engineer based in Amsterdam. i work at the intersection of",
-      "design, product, and engineering. I thrive in handyman roles with extreme ownership",
-      "where the designer actually ships (design, engineering, branding, you name it).",
+      "Product designer with 7 years of exp. in early-stage startups",
+      "I work at the intersection of design, product, and engineering.",
+      "I thrive in handyman roles with extreme ownership, where the",
+      "designer actually ships (design, engineering, branding, you name it).",
       "",
       "currently leading the product & design team at rocapine — a mobile",
-      "app wellness studio shipping ~150 apps a year.",
+      "consumer app studio shipping ~150 apps a year.",
       "",
-      "previously: head of design & product at tocco, co-founder & cpo at",
-      "tadaa, founding designer at sourceful, and a stint as a data",
-      "consultant at accenture in london.",
+      "Previously: head of design & product at tocco, founding designer at", 
+      "Pimento (acq. by Mistral AI founding designer at sourceful, and a",
+      "stint as a data consultant at accenture in london.",
     ],
     options: [
       { number: 1, command: "work", label: "see my work", hint: "recent projects" },
@@ -239,17 +234,16 @@ export const routes: Record<string, TermRoute> = {
       { number: 3, command: "back", label: "back", hint: "return to main menu" },
     ],
   },
-  play: {
-    id: "play",
+  playground: {
+    id: "playground",
     parent: "root",
     greeting: [
-      "play/",
-      "─────",
-      "experiments, side things, and hobbies.",
+      "side projects and experiments.",
     ],
     options: [
-      projectOption(1, "ride-on"),
-      { number: 2, command: "back", label: "back", hint: "return to main menu" },
+      projectOption(1, "moipresident"),
+      projectOption(2, "ride-on"),
+      { number: 3, command: "back", label: "back", hint: "return to main menu" },
     ],
   },
   contact: {

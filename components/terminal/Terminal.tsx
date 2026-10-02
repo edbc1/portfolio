@@ -2,10 +2,11 @@
 
 import { useCallback, useReducer } from "react";
 import { TerminalPane } from "./TerminalPane";
+import { ThemeToggle } from "./ThemeToggle";
 import { projects, routes, type TermOption, type TermProject } from "@/lib/terminal-content";
 
 export type HistoryBlock =
-  | { kind: "greeting"; lines: string[] }
+  | { kind: "greeting"; lines: string[]; heading?: boolean }
   | { kind: "menu"; options: TermOption[]; routeId: string }
   | { kind: "input"; cwd: string; text: string }
   | { kind: "text"; lines: string[] }
@@ -37,10 +38,12 @@ const CV_PATH = "/edouard-bucaille-cv.pdf";
 
 const greet = (routeId: string): HistoryBlock[] => {
   const route = routes[routeId];
-  return [
-    { kind: "greeting", lines: route.greeting },
-    { kind: "menu", options: route.options, routeId },
-  ];
+  const lines = route.greeting ?? [];
+  const blocks: HistoryBlock[] = [];
+  // a first line like "about/" is the section heading
+  if (lines.length > 0) blocks.push({ kind: "greeting", lines, heading: /^\S+\/$/.test(lines[0]) });
+  blocks.push({ kind: "menu", options: route.options, routeId });
+  return blocks;
 };
 
 const initialState: State = {
@@ -134,11 +137,14 @@ function reducer(state: State, action: Action): State {
 
       if (cmd === "back" || raw === "cd .." || cmd === "..") {
         if (state.projectView) {
+          // return to the list the project was opened from
+          const listed = routes[state.cwd]?.options.some((o) => o.command === `open ${state.projectView}`);
+          const listId = listed ? state.cwd : "work";
           return {
             ...state,
             projectView: null,
-            cwd: "work",
-            history: [...history, ...greet("work")],
+            cwd: listId,
+            history: [...history, ...greet(listId)],
           };
         }
         if (state.cwd === "root") {
@@ -229,6 +235,7 @@ export function Terminal() {
 
   return (
     <div className="absolute inset-0 z-[60] bg-[var(--color-bg)]">
+      <ThemeToggle />
       <TerminalPane
         history={state.history}
         cwdLabel={cwdLabel(state.cwd)}

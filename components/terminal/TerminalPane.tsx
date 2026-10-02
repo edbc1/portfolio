@@ -80,7 +80,7 @@ export function TerminalPane({
         ));
       })()}
 
-      <form onSubmit={handleSubmit} className="flex items-baseline gap-2 mt-1">
+      <form onSubmit={handleSubmit} className="flex items-baseline gap-2 mt-10">
         <span className="text-[var(--color-phosphor-dim)] select-none">
           ed@personal.os <span className="text-[var(--color-phosphor-faint)]">{cwdLabel}</span> $
         </span>
@@ -110,7 +110,7 @@ function Lightbox({ target, onClose }: { target: ZoomTarget; onClose: () => void
         e.stopPropagation();
         onClose();
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm px-4 py-8 md:px-12 md:py-12"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-overlay)] backdrop-blur-sm px-4 py-8 md:px-12 md:py-12"
       role="dialog"
       aria-modal="true"
     >
@@ -172,7 +172,9 @@ function HistoryRow({
       return (
         <div className="mb-2 text-[var(--color-phosphor-bright)]">
           {block.lines.map((line, i) => (
-            <div key={i}>{line.length === 0 ? " " : `> ${line}`}</div>
+            <div key={i} className={block.heading && i === 0 ? "font-semibold mb-1" : undefined}>
+              {line.length === 0 ? " " : line}
+            </div>
           ))}
         </div>
       );
@@ -188,7 +190,7 @@ function HistoryRow({
 
     case "input":
       return (
-        <div className="text-[var(--color-phosphor-dim)] mt-1 mb-1">
+        <div className="text-[var(--color-phosphor-dim)] mt-10 mb-6">
           ed@personal.os{" "}
           <span className="text-[var(--color-phosphor-faint)]">
             {block.cwd === "root" ? "~" : `~/${block.cwd}`}
@@ -212,7 +214,7 @@ function HistoryRow({
 
     case "error":
       return (
-        <div className="mb-2 text-[#d97a7a]">
+        <div className="mb-2 text-[var(--color-error)]">
           <span className="text-[var(--color-phosphor-faint)]">!</span> {block.text}
         </div>
       );
@@ -249,16 +251,17 @@ function ProjectBlock({
   onOption: (cmd: string) => void;
   onZoom: (t: ZoomTarget) => void;
 }) {
+  const links = project.links ?? [];
+  const described = links.filter((l) => l.description);
+  const plain = links.filter((l) => !l.description);
+
   return (
     <div className="mb-3">
-      <div className="text-[var(--color-phosphor-bright)] uppercase tracking-[0.08em] text-[14px]">
+      <div className="text-[var(--color-phosphor-bright)] font-semibold uppercase tracking-[0.08em] text-[14px] mb-2">
         {project.title}
-        <span className="text-[var(--color-phosphor-faint)] normal-case tracking-normal text-[12px] ml-2">
+        <span className="text-[var(--color-phosphor-faint)] font-normal normal-case tracking-normal text-[12px] ml-2">
           {project.year} · {project.tag}
         </span>
-      </div>
-      <div className="text-[var(--color-phosphor-dim)] mb-2">
-        ─────────────────────────────
       </div>
       <div className="mb-2">{project.oneLiner}</div>
       <div className="mb-3">
@@ -287,9 +290,29 @@ function ProjectBlock({
         </div>
       )}
 
-      {project.links && project.links.length > 0 && (
+      {described.length > 0 && (
         <div className="mb-3">
-          {project.links.map((l) => (
+          {project.linksTitle && <div className="mb-1">{project.linksTitle}</div>}
+          {described.map((l) => (
+            <div key={l.url}>
+              <span className="text-[var(--color-phosphor-dim)]">→</span>{" "}
+              <a
+                href={l.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-[var(--color-phosphor-bright)] underline underline-offset-4"
+              >
+                {l.label}
+              </a>
+              <span className="text-[var(--color-phosphor-faint)] ml-2">{l.description}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {plain.length > 0 && (
+        <div className="mb-3">
+          {plain.map((l) => (
             <a
               key={l.url}
               href={l.url}
@@ -324,7 +347,7 @@ function ProjectNav({
   const next = nextId ? projects[nextId] : null;
 
   const options: TermOption[] = [
-    { number: 1, command: "back", label: "back to work" },
+    { number: 1, command: "back", label: idx >= 0 ? "back to work" : "back" },
   ];
   if (next) {
     options.push({
@@ -398,7 +421,7 @@ function ImageTile({
             className="h-full w-auto block pointer-events-none"
           />
         )}
-        <span className="absolute bottom-1 right-1 text-[10px] uppercase tracking-[0.2em] text-[var(--color-phosphor-bright)] bg-black/60 px-1.5 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="absolute bottom-1 right-1 text-[10px] uppercase tracking-[0.2em] text-[var(--color-phosphor-bright)] bg-[var(--color-bg)]/70 px-1.5 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
           [+] zoom
         </span>
       </button>

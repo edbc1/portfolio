@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 @theme inline {
+  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans);
+}
+
+/* dark: phosphor on black (default) */
+:root {
+  color-scheme: dark;
   --color-phosphor: #ffffff;
   --color-phosphor-bright: #ffffff;
   --color-phosphor-dim: #b8b8b8;
@@ -12,8 +19,42 @@
   --color-bg-titlebar: #141414;
   --color-border: #333333;
   --color-border-bright: #888888;
-  --font-mono: var(--font-geist-mono);
-  --font-sans: var(--font-geist-sans);
+  --color-error: #d97a7a;
+  --color-overlay: rgb(0 0 0 / 0.85);
+  --color-selection-bg: #ffffff;
+  --color-selection-fg: #000000;
+}
+
+/* light: kindle colorsoft — light grey e-ink paper, soft ink, muted color */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-phosphor: #222221;
+  --color-phosphor-bright: #1a1a19;
+  --color-phosphor-dim: #555552;
+  --color-phosphor-faint: #8a8a86;
+  --color-phosphor-ghost: #efefec;
+  --color-bg: #fafaf9;
+  --color-bg-elev: #f4f4f2;
+  --color-bg-window: #f4f4f2;
+  --color-bg-titlebar: #efefec;
+  --color-border: #e2e2de;
+  --color-border-bright: #9d9d98;
+  --color-error: #a5503f;
+  --color-overlay: rgb(250 250 249 / 0.92);
+  --color-selection-bg: #e3e3dd;
+  --color-selection-fg: #1a1a19;
+}
+
+/* e-ink page refresh: brief invert flash when the theme flips */
+@keyframes eink-refresh {
+  0%, 100% { filter: none; }
+  35%, 55% { filter: invert(1); }
+}
+html.eink-refresh body {
+  animation: eink-refresh 220ms steps(1, end);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.eink-refresh body { animation: none; }
 }
 
 @layer base {
@@ -28,8 +69,8 @@
   }
 
   ::selection {
-    background: #ffffff;
-    color: #000000;
+    background: var(--color-selection-bg);
+    color: var(--color-selection-fg);
   }
 
   button, a {
