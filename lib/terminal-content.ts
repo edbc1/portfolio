@@ -60,7 +60,7 @@ export const projects: Record<string, TermProject> = {
     oneLiner: "Freelance gig - Gen AI to create, edit, and upscale any image",
     body: [
       "Founding product designer working on the Product (generator + editor interface),", 
-      "the visuals, and the website. Refered to as the \"French Midjourney\"",
+      "the visuals, and the website. Referred to as the \"French Midjourney\"",
       "Worked with the CEO and the Dev team to increase D1 and D7 retention",
     ],
     images: [],
