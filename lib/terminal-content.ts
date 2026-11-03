@@ -303,9 +303,6 @@ export const routes: Record<string, TermRoute> = {
   contact: {
     id: "contact",
     parent: "root",
-    greeting: [
-      "contact/",
-    ],
     options: [
       { number: 1, command: "email", label: "send an email", hint: "opens your mail client" },
       { number: 2, command: "linkedin", label: "open linkedin", hint: "linkedin.com/in/edouardbucaille" },
