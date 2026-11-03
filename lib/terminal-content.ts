@@ -153,6 +153,8 @@ export const projects: Record<string, TermProject> = {
     ],
     images: [
       { src: "/projects/moipresident/1.webp", caption: "the programme, 30 policy areas" },
+      { src: "/projects/moipresident/2.webp", caption: "ia & numérique, costed" },
+      { src: "/projects/moipresident/3.webp", caption: "every source cited" },
     ],
     links: [{ label: "moipresident.org", url: "https://www.moipresident.org/" }],
   },
@@ -187,6 +189,7 @@ export const projects: Record<string, TermProject> = {
     images: [
       { src: "/projects/gradium/1.webp", caption: "pick a face" },
       { src: "/projects/gradium/2.webp", caption: "same words, different life" },
+      { src: "/projects/gradium/3.webp", caption: "eleven voices, one script" },
     ],
     links: [{ label: "muidarg.vercel.app", url: "https://muidarg.vercel.app/" }],
   },
