@@ -14,6 +14,8 @@ export type TermProject = {
   images: TermImage[];
   links?: { label: string; url: string; description?: string }[];
   linksTitle?: string;
+  /** wrap every image in a device shell (phone screenshots) */
+  imageFrame?: "phone";
   /** groups of project ids rendered inline under this one (e.g. apps shipped at a company) */
   childGroups?: { title: string; ids: string[] }[];
 };
@@ -257,6 +259,7 @@ export const projects: Record<string, TermProject> = {
       "cycle phases, a daily forecast, nutrition and workouts tuned to where you are in your cycle.",
       "top 10 women's app · trusted by 600k users · 4.7 ★ on 10k+ ratings.",
     ],
+    imageFrame: "phone",
     images: [
       { src: "/projects/harmony/1.webp", caption: "welcome" },
       { src: "/projects/harmony/2.webp", caption: "today — ovulation, day 15" },
@@ -299,6 +302,7 @@ export const projects: Record<string, TermProject> = {
       "one short sortie a night on a dark screen — 42 sorties across 6 missions.",
       "awake at 0300? flip to red and run the drill instead of the feed.",
     ],
+    imageFrame: "phone",
     images: [
       { src: "/projects/off-duty/1.webp", caption: "fall asleep in under 2 minutes" },
       { src: "/projects/off-duty/2.webp", caption: "week 6 — major" },
@@ -317,6 +321,7 @@ export const projects: Record<string, TermProject> = {
       "819 ingredients to collect, filtered by season, veg, fruit and herbs.",
       "point the camera at an ingredient to log it and unlock its card.",
     ],
+    imageFrame: "phone",
     images: [
       { src: "/projects/ingredex/1.webp", caption: "the dex — 442 / 819" },
       { src: "/projects/ingredex/2.webp", caption: "bell pepper, caught" },
@@ -335,6 +340,7 @@ export const projects: Record<string, TermProject> = {
       "pick a duration, depart, land somewhere new. each completed flight earns a passport stamp.",
       "streaks, focus hours and a weekly leaderboard of top focusers.",
     ],
+    imageFrame: "phone",
     images: [
       { src: "/projects/departure/1.webp", caption: "welcome" },
       { src: "/projects/departure/2.webp", caption: "your travel profile" },

@@ -4,7 +4,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { HistoryBlock } from "./Terminal";
 import { projects, routes, type TermOption, type TermProject } from "@/lib/terminal-content";
 
-type ZoomTarget = { src: string; alt: string; isVideo: boolean };
+type ZoomItem = { src: string; alt: string; caption: string; isVideo: boolean; frame?: "phone" };
+/** a gallery (all images of one project) opened at `index` */
+type ZoomTarget = { items: ZoomItem[]; index: number };
+
+const isVideoSrc = (src: string) => /\.(mp4|webm|mov)$/i.test(src);
 
 export function TerminalPane({
   history,
@@ -24,6 +28,11 @@ export function TerminalPane({
     if (!zoom) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setZoom(null);
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        const dir = e.key === "ArrowRight" ? 1 : -1;
+        setZoom((z) => (z ? { ...z, index: (z.index + dir + z.items.length) % z.items.length } : z));
+      }
     };
     window.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
@@ -104,19 +113,41 @@ export function TerminalPane({
 
       <div className="h-8" />
 
-      {zoom && <Lightbox target={zoom} onClose={() => setZoom(null)} />}
+      {zoom && (
+        <Lightbox
+          target={zoom}
+          onClose={() => setZoom(null)}
+          onStep={(dir) =>
+            setZoom((z) => (z ? { ...z, index: (z.index + dir + z.items.length) % z.items.length } : z))
+          }
+        />
+      )}
     </div>
   );
 }
 
-function Lightbox({ target, onClose }: { target: ZoomTarget; onClose: () => void }) {
+function Lightbox({
+  target,
+  onClose,
+  onStep,
+}: {
+  target: ZoomTarget;
+  onClose: () => void;
+  onStep: (dir: 1 | -1) => void;
+}) {
+  const { items, index } = target;
+  const item = items[index];
+  const many = items.length > 1;
+  const arrowClass =
+    "absolute top-1/2 -translate-y-1/2 z-10 h-12 w-12 md:h-14 md:w-14 flex items-center justify-center text-[var(--color-phosphor-bright)] text-[22px] border border-[var(--color-border-bright)] bg-[var(--color-bg)]/70 hover:bg-[var(--color-phosphor-ghost)] select-none";
+
   return (
     <div
       onClick={(e) => {
         e.stopPropagation();
         onClose();
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-overlay)] backdrop-blur-sm px-4 py-8 md:px-12 md:py-12"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-overlay)] backdrop-blur-sm px-4 py-8 md:px-12 md:py-12"
       role="dialog"
       aria-modal="true"
     >
@@ -130,28 +161,76 @@ function Lightbox({ target, onClose }: { target: ZoomTarget; onClose: () => void
       >
         [esc] close
       </button>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="relative max-w-[min(1600px,95vw)] max-h-[88vh] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden flex"
-      >
-        {target.isVideo ? (
-          <video
-            src={target.src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls
-            className="max-w-[min(1600px,95vw)] max-h-[88vh] w-auto h-auto block"
-          />
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={target.src}
-            alt={target.alt}
-            className="max-w-[min(1600px,95vw)] max-h-[88vh] w-auto h-auto block"
-          />
-        )}
+
+      {many && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onStep(-1);
+            }}
+            aria-label="previous image"
+            className={`${arrowClass} left-2 md:left-6`}
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onStep(1);
+            }}
+            aria-label="next image"
+            className={`${arrowClass} right-2 md:right-6`}
+          >
+            →
+          </button>
+        </>
+      )}
+
+      <div onClick={(e) => e.stopPropagation()} className="flex flex-col items-center gap-3 max-w-[min(1600px,95vw)]">
+        <div
+          className={
+            item.frame === "phone"
+              ? "relative max-h-[82vh] rounded-[52px] bg-black p-[10px] shadow-[0_0_0_1px_var(--color-border-bright)] flex"
+              : "relative max-h-[82vh] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden flex"
+          }
+        >
+          {item.isVideo ? (
+            <video
+              key={item.src}
+              src={item.src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              className="max-w-[min(1600px,95vw)] max-h-[82vh] w-auto h-auto block"
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={item.src}
+              src={item.src}
+              alt={item.alt}
+              className={
+                item.frame === "phone"
+                  ? "max-w-[min(1600px,95vw)] max-h-[calc(82vh-20px)] w-auto h-auto block rounded-[42px]"
+                  : "max-w-[min(1600px,95vw)] max-h-[82vh] w-auto h-auto block"
+              }
+            />
+          )}
+        </div>
+        <div className="text-[12px] text-[var(--color-phosphor-dim)] text-center px-2">
+          {many && (
+            <span className="text-[var(--color-phosphor-faint)] mr-3">
+              {index + 1} / {items.length}
+            </span>
+          )}
+          {item.caption}
+          {many && <span className="text-[var(--color-phosphor-faint)] ml-3 hidden md:inline">← → to browse</span>}
+        </div>
       </div>
     </div>
   );
@@ -288,7 +367,7 @@ function ProjectBlock({
 
       {project.images.length > 0 && (
         <div className="mb-3 -mx-4 md:-mx-6">
-          <div className="flex gap-3 overflow-x-auto overflow-y-hidden scroll-none px-4 md:px-6 pb-2">
+          <div className="flex gap-3 overflow-x-auto overflow-y-hidden scroll-none px-4 md:px-6 pt-1 pb-2">
             {project.images.map((img, i) => (
               <ImageTile
                 key={i}
@@ -297,7 +376,20 @@ function ProjectBlock({
                 caption={img.caption}
                 index={i}
                 total={project.images.length}
-                onZoom={onZoom}
+                frame={project.imageFrame}
+                onZoom={() => {
+                  const items: ZoomItem[] = project.images
+                    .filter((im): im is typeof im & { src: string } => !!im.src)
+                    .map((im) => ({
+                      src: im.src,
+                      alt: im.alt ?? im.caption,
+                      caption: im.caption,
+                      isVideo: isVideoSrc(im.src),
+                      frame: project.imageFrame,
+                    }));
+                  const index = Math.max(0, items.findIndex((it) => it.src === img.src));
+                  onZoom({ items, index });
+                }}
               />
             ))}
           </div>
@@ -397,6 +489,7 @@ function ImageTile({
   caption,
   index,
   total,
+  frame,
   onZoom,
 }: {
   src?: string;
@@ -404,7 +497,8 @@ function ImageTile({
   caption: string;
   index: number;
   total: number;
-  onZoom: (t: ZoomTarget) => void;
+  frame?: "phone";
+  onZoom: () => void;
 }) {
   if (!src) {
     return (
@@ -416,7 +510,7 @@ function ImageTile({
     );
   }
 
-  const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+  const isVideo = isVideoSrc(src);
 
   return (
     <div className="shrink-0">
@@ -424,10 +518,14 @@ function ImageTile({
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          onZoom({ src, alt, isVideo });
+          onZoom();
         }}
         aria-label={`zoom: ${alt}`}
-        className="group relative h-[260px] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden inline-flex cursor-zoom-in p-0"
+        className={
+          frame === "phone"
+            ? "group relative h-[260px] rounded-[18px] bg-black p-[4px] shadow-[0_0_0_1px_var(--color-border-bright)] inline-flex cursor-zoom-in"
+            : "group relative h-[260px] border border-[var(--color-border-bright)] bg-[var(--color-bg-elev)] overflow-hidden inline-flex cursor-zoom-in p-0"
+        }
       >
         {isVideo ? (
           <video
@@ -443,7 +541,7 @@ function ImageTile({
           <img
             src={src}
             alt={alt}
-            className="h-full w-auto block pointer-events-none"
+            className={frame === "phone" ? "h-[252px] w-auto block pointer-events-none rounded-[14px]" : "h-full w-auto block pointer-events-none"}
           />
         )}
         <span className="absolute bottom-1 right-1 text-[10px] uppercase tracking-[0.2em] text-[var(--color-phosphor-bright)] bg-[var(--color-bg)]/70 px-1.5 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
