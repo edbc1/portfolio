@@ -306,7 +306,7 @@ export const routes: Record<string, TermRoute> = {
     options: [
       { number: 1, command: "email", label: "send an email", hint: "opens your mail client" },
       { number: 2, command: "linkedin", label: "open linkedin", hint: "linkedin.com/in/edouardbucaille" },
-      { number: 3, command: "cv", label: "download cv", hint: "pdf · ~600kb" },
+      { number: 3, command: "cv", label: "download cv", hint: "pdf · ~1mb" },
       { number: 4, command: "back", label: "back", hint: "return to main menu" },
     ],
   },
