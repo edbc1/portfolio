@@ -295,9 +295,6 @@ export const routes: Record<string, TermRoute> = {
   playground: {
     id: "playground",
     parent: "root",
-    greeting: [
-      "side projects and experiments.",
-    ],
     feed: ["simple-works", "gradium", "moipresident", "azom", "ride-on"],
     options: [
       { number: 1, command: "back", label: "back", hint: "return to main menu" },
