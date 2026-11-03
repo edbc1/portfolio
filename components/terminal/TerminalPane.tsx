@@ -36,7 +36,12 @@ export function TerminalPane({
 
   useLayoutEffect(() => {
     const el = scrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    if (!el) return;
+    // long output (e.g. the playground feed): keep the command at the top
+    // instead of jumping past the content to the prompt
+    const fresh = el.querySelector<HTMLElement>("[data-fresh-start]");
+    const top = fresh ? fresh.offsetTop - 12 : 0;
+    el.scrollTop = fresh && el.scrollHeight - top > el.clientHeight ? top : el.scrollHeight;
   }, [history]);
 
   useEffect(() => {
@@ -61,7 +66,7 @@ export function TerminalPane({
     <div
       ref={scrollRef}
       onClick={focusInput}
-      className="h-full overflow-y-auto scroll-hidden px-4 py-3 md:px-6 md:py-5 text-[13px] leading-6"
+      className="relative h-full overflow-y-auto scroll-hidden px-4 py-3 md:px-6 md:py-5 text-[13px] leading-6"
     >
       <div className="mb-3 text-[var(--color-phosphor-dim)]">
         PERSONAL/OS  v2.0.0
@@ -72,6 +77,7 @@ export function TerminalPane({
         return history.map((block, i) => (
           <div
             key={i}
+            data-fresh-start={i === freshStart && freshStart > 0 ? "" : undefined}
             className="transition-opacity duration-300"
             style={{ opacity: i < freshStart ? 0.32 : 1 }}
           >
