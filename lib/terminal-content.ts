@@ -14,6 +14,8 @@ export type TermProject = {
   images: TermImage[];
   links?: { label: string; url: string; description?: string }[];
   linksTitle?: string;
+  /** groups of project ids rendered inline under this one (e.g. apps shipped at a company) */
+  childGroups?: { title: string; ids: string[] }[];
 };
 
 export type TermOption = {
@@ -45,13 +47,9 @@ export const projects: Record<string, TermProject> = {
       "The team is made of 100% AI builders moving from Figma to Claude code.",
     ],
     images: [],
-    linksTitle: "Check our work",
-    links: [
-      { label: "tdy", url: "https://apps.apple.com/us/app/tdy-personal-fitness-coach/id6738780947", description: "personal fitness coach (formerly oly)" },
-      { label: "harmony", url: "https://apps.apple.com/us/app/harmony-cycle-syncing-period/id6736703227", description: "cycle syncing & period tracking" },
-      { label: "eve", url: "https://apps.apple.com/us/app/eve-motherhood-wellness/id6743140834", description: "wellness through motherhood" },
-      { label: "victus", url: "https://apps.apple.com/us/app/victus-hyrox-training-plans/id6752902804", description: "hyrox training plans" },
-      { label: "rocapi.ne", url: "https://rocapi.ne/", description: "company website I built" },
+    childGroups: [
+      { title: "Some of the tools I shipped", ids: ["onboarding-studio"] },
+      { title: "Some of the apps I shipped", ids: ["harmony", "tdy", "off-duty", "ingredex", "departure"] },
     ],
   },
   pimento: {
@@ -65,7 +63,11 @@ export const projects: Record<string, TermProject> = {
       "the visuals, and the website. Referred to as the \"French Midjourney\"",
       "Worked with the CEO and the Dev team to increase D1 and D7 retention",
     ],
-    images: [],
+    images: [
+      { src: "/projects/pimento/1.webp", caption: "brand" },
+      { src: "/projects/pimento/2.webp", caption: "onboarding" },
+      { src: "/projects/pimento/editor.mp4", caption: "editor demo" },
+    ],
     links: [{ label: "pimento.design", url: "https://www.pimento.design/" }],
   },
   tocco: {
@@ -79,7 +81,14 @@ export const projects: Record<string, TermProject> = {
       "Led sales, product & design. shipped the platform used by 100k+ users",
       "Built the discovery flow + supplier↔brand co-development surface",
     ],
-    images: [],
+    images: [
+      { src: "/projects/tocco/1.webp", caption: "brand" },
+      { src: "/projects/tocco/2.webp", caption: "materials that create a cleaner tomorrow" },
+      { src: "/projects/tocco/3.webp", caption: "material library" },
+      { src: "/projects/tocco/4.webp", caption: "supplier profile — earth score" },
+      { src: "/projects/tocco/5.webp", caption: "sample box" },
+      { src: "/projects/tocco/6.webp", caption: "marketplace — trending themes" },
+    ],
     links: [{ label: "tocco.earth", url: "https://tocco.earth/" }],
   },
   tadaa: {
@@ -124,7 +133,18 @@ export const projects: Record<string, TermProject> = {
       "built the design practices and implemented processes.",
       "led the in-browser packaging configurator and quote flow.",
     ],
-    images: [],
+    images: [
+      { src: "/projects/sourceful/1.webp", caption: "add tape — configurator" },
+      { src: "/projects/sourceful/2.webp", caption: "mailer box — presets" },
+      { src: "/projects/sourceful/3.webp", caption: "artwork editor — filters" },
+      { src: "/projects/sourceful/4.webp", caption: "shop + platform" },
+      { src: "/projects/sourceful/5.webp", caption: "tape configurator, v1" },
+      { src: "/projects/sourceful/6.webp", caption: "order summary" },
+      { src: "/projects/sourceful/7.webp", caption: "packaging design" },
+      { src: "/projects/sourceful/8.webp", caption: "ai packaging brief" },
+      { src: "/projects/sourceful/9.webp", caption: "design gallery" },
+      { src: "/projects/sourceful/10.webp", caption: "create new" },
+    ],
     links: [{ label: "sourceful.com", url: "https://www.sourceful.com/" }],
   },
   accenture: {
@@ -210,11 +230,28 @@ export const projects: Record<string, TermProject> = {
     ],
     links: [{ label: "azom-studio.vercel.app", url: "https://azom-studio.vercel.app/" }],
   },
+  "onboarding-studio": {
+    id: "onboarding-studio",
+    title: "onboarding studio",
+    year: "2025 — now",
+    tag: "internal tool",
+    oneLiner: "our in-house platform to build, ship and measure onboardings and paywalls — no app release needed.",
+    body: [
+      "one cockpit for everything live: onboardings, paywalls, moments, per app version. replaced superwall.",
+      "flow analytics per step: where users quit, who skips, how branches split and merge.",
+      "user-level debugging: why this user got a paywall, which audience matched, what they answered.",
+    ],
+    images: [
+      { src: "/projects/onboarding-studio/1.webp", caption: "overview — what's live" },
+      { src: "/projects/onboarding-studio/2.webp", caption: "onboarding flow analytics" },
+      { src: "/projects/onboarding-studio/3.webp", caption: "user detail — why did they get a paywall?" },
+    ],
+  },
   harmony: {
     id: "harmony",
     title: "harmony",
     year: "2024 — now",
-    tag: "rocapine · cycle syncing",
+    tag: "cycle syncing",
     oneLiner: "more than a period tracker — sync energy, meals, movement and mindset with your cycle.",
     body: [
       "cycle phases, a daily forecast, nutrition and workouts tuned to where you are in your cycle.",
@@ -236,7 +273,7 @@ export const projects: Record<string, TermProject> = {
     id: "tdy",
     title: "tdy",
     year: "2024 — now",
-    tag: "rocapine · fitness",
+    tag: "fitness",
     oneLiner: "train like an athlete — a personal fitness coach built with teddy riner's coaches.",
     body: [
       "a short profiling test places you in one of five training mind types; the plan adapts to your day.",
@@ -352,9 +389,8 @@ export const routes: Record<string, TermRoute> = {
     options: [
       { number: 1, command: "about", label: "about", hint: "who i am, how i work" },
       { number: 2, command: "work", label: "work", hint: "recent projects + case studies" },
-      { number: 3, command: "apps", label: "apps", hint: "mobile apps i built + screenshots" },
-      { number: 4, command: "playground", label: "playground", hint: "side projects + experiments" },
-      { number: 5, command: "contact", label: "contact", hint: "email, cv, socials" },
+      { number: 3, command: "playground", label: "playground", hint: "side projects + experiments" },
+      { number: 4, command: "contact", label: "contact", hint: "email, cv, socials" },
     ],
   },
   work: {
@@ -390,17 +426,6 @@ export const routes: Record<string, TermRoute> = {
       { number: 1, command: "work", label: "see my work", hint: "recent projects" },
       { number: 2, command: "contact", label: "get in touch", hint: "email + socials" },
       { number: 3, command: "back", label: "back", hint: "return to main menu" },
-    ],
-  },
-  apps: {
-    id: "apps",
-    parent: "root",
-    greeting: [
-      "mobile apps i built — on the app store, or about to be.",
-    ],
-    feed: ["harmony", "tdy", "off-duty", "ingredex", "departure"],
-    options: [
-      { number: 1, command: "back", label: "back", hint: "return to main menu" },
     ],
   },
   playground: {

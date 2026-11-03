@@ -251,20 +251,26 @@ function OptionRow({ opt, onClick }: { opt: TermOption; onClick: () => void }) {
 function ProjectBlock({
   project,
   inline,
+  nested,
   onOption,
   onZoom,
 }: {
   project: TermProject;
   inline?: boolean;
+  /** rendered inside a parent project (no nav, tighter spacing) */
+  nested?: boolean;
   onOption: (cmd: string) => void;
   onZoom: (t: ZoomTarget) => void;
 }) {
   const links = project.links ?? [];
   const described = links.filter((l) => l.description);
   const plain = links.filter((l) => !l.description);
+  const childGroups = (project.childGroups ?? [])
+    .map((g) => ({ ...g, ids: g.ids.filter((id) => projects[id]) }))
+    .filter((g) => g.ids.length > 0);
 
   return (
-    <div className={inline ? "mb-10" : "mb-3"}>
+    <div className={nested ? "mb-8" : inline ? "mb-10" : "mb-3"}>
       <div className="text-[var(--color-phosphor-bright)] font-semibold uppercase tracking-[0.08em] text-[14px] mb-2">
         {project.title}
         <span className="text-[var(--color-phosphor-faint)] font-normal normal-case tracking-normal text-[12px] ml-2">
@@ -318,6 +324,17 @@ function ProjectBlock({
         </div>
       )}
 
+      {childGroups.map((g) => (
+        <div key={g.title} className="mt-6 mb-3">
+          <div className="mb-4 text-[var(--color-phosphor-dim)]">{g.title}</div>
+          <div className="pl-3 md:pl-4 border-l border-[var(--color-border-bright)]">
+            {g.ids.map((id) => (
+              <ProjectBlock key={id} project={projects[id]} nested onOption={onOption} onZoom={onZoom} />
+            ))}
+          </div>
+        </div>
+      ))}
+
       {plain.length > 0 && (
         <div className="mb-3">
           {plain.map((l) => (
@@ -334,7 +351,7 @@ function ProjectBlock({
         </div>
       )}
 
-      {!inline && <ProjectNav project={project} onOption={onOption} />}
+      {!inline && !nested && <ProjectNav project={project} onOption={onOption} />}
     </div>
   );
 }
