@@ -210,7 +210,7 @@ function HistoryRow({
       );
 
     case "project":
-      return <ProjectBlock project={block.project} onOption={onOption} onZoom={onZoom} />;
+      return <ProjectBlock project={block.project} inline={block.inline} onOption={onOption} onZoom={onZoom} />;
 
     case "error":
       return (
@@ -244,10 +244,12 @@ function OptionRow({ opt, onClick }: { opt: TermOption; onClick: () => void }) {
 
 function ProjectBlock({
   project,
+  inline,
   onOption,
   onZoom,
 }: {
   project: TermProject;
+  inline?: boolean;
   onOption: (cmd: string) => void;
   onZoom: (t: ZoomTarget) => void;
 }) {
@@ -256,7 +258,7 @@ function ProjectBlock({
   const plain = links.filter((l) => !l.description);
 
   return (
-    <div className="mb-3">
+    <div className={inline ? "mb-10" : "mb-3"}>
       <div className="text-[var(--color-phosphor-bright)] font-semibold uppercase tracking-[0.08em] text-[14px] mb-2">
         {project.title}
         <span className="text-[var(--color-phosphor-faint)] font-normal normal-case tracking-normal text-[12px] ml-2">
@@ -326,7 +328,7 @@ function ProjectBlock({
         </div>
       )}
 
-      <ProjectNav project={project} onOption={onOption} />
+      {!inline && <ProjectNav project={project} onOption={onOption} />}
     </div>
   );
 }

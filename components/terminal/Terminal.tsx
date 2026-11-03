@@ -10,7 +10,7 @@ export type HistoryBlock =
   | { kind: "menu"; options: TermOption[]; routeId: string }
   | { kind: "input"; cwd: string; text: string }
   | { kind: "text"; lines: string[] }
-  | { kind: "project"; project: TermProject }
+  | { kind: "project"; project: TermProject; inline?: boolean }
   | { kind: "error"; text: string };
 
 type State = {
@@ -42,6 +42,9 @@ const greet = (routeId: string): HistoryBlock[] => {
   const blocks: HistoryBlock[] = [];
   // a first line like "about/" is the section heading
   if (lines.length > 0) blocks.push({ kind: "greeting", lines, heading: /^\S+\/$/.test(lines[0]) });
+  for (const id of route.feed ?? []) {
+    if (projects[id]) blocks.push({ kind: "project", project: projects[id], inline: true });
+  }
   blocks.push({ kind: "menu", options: route.options, routeId });
   return blocks;
 };
@@ -138,7 +141,10 @@ function reducer(state: State, action: Action): State {
       if (cmd === "back" || raw === "cd .." || cmd === "..") {
         if (state.projectView) {
           // return to the list the project was opened from
-          const listed = routes[state.cwd]?.options.some((o) => o.command === `open ${state.projectView}`);
+          const r = routes[state.cwd];
+          const listed =
+            r?.options.some((o) => o.command === `open ${state.projectView}`) ||
+            r?.feed?.includes(state.projectView);
           const listId = listed ? state.cwd : "work";
           return {
             ...state,

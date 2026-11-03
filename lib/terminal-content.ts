@@ -27,6 +27,8 @@ export type TermRoute = {
   id: string;
   parent?: string;
   greeting?: string[];
+  /** projects shown inline under the greeting, no click needed */
+  feed?: string[];
   options: TermOption[];
 };
 
@@ -293,13 +295,9 @@ export const routes: Record<string, TermRoute> = {
     greeting: [
       "side projects and experiments.",
     ],
+    feed: ["simple-works", "gradium", "moipresident", "azom", "ride-on"],
     options: [
-      projectOption(1, "simple-works"),
-      projectOption(2, "gradium"),
-      projectOption(3, "moipresident"),
-      projectOption(4, "azom"),
-      projectOption(5, "ride-on"),
-      { number: 6, command: "back", label: "back", hint: "return to main menu" },
+      { number: 1, command: "back", label: "back", hint: "return to main menu" },
     ],
   },
   contact: {
