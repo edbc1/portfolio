@@ -149,7 +149,9 @@ export const projects: Record<string, TermProject> = {
       "30 policy areas, from democracy and justice to energy, ai and defence.",
       "every measure budgeted: total cost vs. revenues & savings, with sources.",
     ],
-    images: [],
+    images: [
+      { src: "/projects/moipresident/1.webp", caption: "the programme, 30 policy areas" },
+    ],
     links: [{ label: "moipresident.org", url: "https://www.moipresident.org/" }],
   },
   "simple-works": {
@@ -162,7 +164,12 @@ export const projects: Record<string, TermProject> = {
       "four pieces (tabouret, bench, chair, dining table), four workshops:",
       "le marais, menorca, niseko, utah. open any piece.",
     ],
-    images: [],
+    images: [
+      { src: "/projects/simple-works/1.webp", caption: "menorca" },
+      { src: "/projects/simple-works/2.webp", caption: "niseko" },
+      { src: "/projects/simple-works/3.webp", caption: "utah" },
+      { src: "/projects/simple-works/4.webp", caption: "tabouret" },
+    ],
     links: [{ label: "simple-works-studio.vercel.app", url: "https://simple-works-studio.vercel.app/" }],
   },
   gradium: {
@@ -175,7 +182,10 @@ export const projects: Record<string, TermProject> = {
       "experiment for gradium (voice ai): one script, read by eleven voices.",
       "pick a face, hear how much a voice tells you about who's speaking.",
     ],
-    images: [],
+    images: [
+      { src: "/projects/gradium/1.webp", caption: "pick a face" },
+      { src: "/projects/gradium/2.webp", caption: "same words, different life" },
+    ],
     links: [{ label: "muidarg.vercel.app", url: "https://muidarg.vercel.app/" }],
   },
   azom: {
@@ -183,12 +193,16 @@ export const projects: Record<string, TermProject> = {
     title: "azom studio",
     year: "2026",
     tag: "experiment",
-    oneLiner: "pick your studio — a tiered plan picker reimagined as rooms.",
+    oneLiner: "a 3d recording studio in the browser — with mozart on the keys.",
     body: [
-      "every artist starts somewhere: practice room, garage, underground, wooden hall.",
-      "hover a room to see it come alive. keyboard-first: ← → to browse, ↵ to enter.",
+      "five seats: producer desk, drums, guitar, piano and vocal booth.",
+      "describe a vibe, let ai lay the foundation, then play along — every key in tune.",
     ],
-    images: [],
+    images: [
+      { src: "/projects/azom/1.webp", caption: "the wooden hall" },
+      { src: "/projects/azom/2.webp", caption: "producer desk" },
+      { src: "/projects/azom/3.webp", caption: "piano, with mozart" },
+    ],
     links: [{ label: "azom-studio.vercel.app", url: "https://azom-studio.vercel.app/" }],
   },
   "ride-on": {
