@@ -48,6 +48,7 @@ export const projects: Record<string, Project> = {
       "To achieve this velocity, we build our own CLIs, skills and internal tools.",
       "The team is made of 100% AI builders moving from Figma to Claude code.",
     ],
+    links: [{ label: "rocapi.ne", url: "https://rocapi.ne/" }],
     rows: [
       { tag: "Branding", text: "Logo #1", status: "live", images: [{ src: "/projects/rocapine/logo-3.webp", caption: "logo — photo, orange" }, { src: "/projects/rocapine/logo-4.webp", caption: "logo — photo, blue" }, { src: "/projects/rocapine/logo-5.webp", caption: "logo — photo, green" }, { src: "/projects/rocapine/logo-1.webp", caption: "logo — pink" }, { src: "/projects/rocapine/logo-2.webp", caption: "logo — black" }] },
       { tag: "Branding", text: "Website iteration #1", status: "archived" },
