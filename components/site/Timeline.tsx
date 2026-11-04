@@ -49,14 +49,16 @@ export function Timeline({ entries }: { entries: TimelineEntry[] }) {
         {entries.map((e) => {
           const on = e.id === active || e.id === activeSection;
           return (
-            <li key={e.id} className={e.kind === "section" ? "mt-5 first:mt-0" : "mt-1.5 pl-4"}>
+            <li key={e.id} className={e.kind === "section" ? "mt-5 first:mt-0" : "mt-1.5 pl-[31px]"}>
               <a href={`#${e.id}`} className="group relative flex gap-3 pl-0">
-                <span
-                  aria-hidden
-                  className={`relative mt-[7px] shrink-0 rounded-full transition-colors ${
-                    e.kind === "section" ? "h-[7px] w-[7px]" : "ml-[1px] h-[5px] w-[5px]"
-                  } ${on ? "bg-[var(--color-phosphor-bright)]" : "bg-[var(--color-border-bright)] group-hover:bg-[var(--color-phosphor-dim)]"}`}
-                />
+                {e.kind === "section" && (
+                  <span
+                    aria-hidden
+                    className={`relative mt-[7px] h-[7px] w-[7px] shrink-0 rounded-full transition-colors ${
+                      on ? "bg-[var(--color-phosphor-bright)]" : "bg-[var(--color-border-bright)] group-hover:bg-[var(--color-phosphor-dim)]"
+                    }`}
+                  />
+                )}
                 <span className="min-w-0">
                   <span
                     className={`block truncate transition-colors ${
