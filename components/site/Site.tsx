@@ -38,11 +38,11 @@ export function Site() {
       <div aria-hidden className="h-12 md:h-16" />
 
       <div id="top" className={shell}>
-        <aside className="hidden lg:block sticky top-0 self-start max-h-screen overflow-y-auto scroll-none pt-28 pb-10">
+        <aside className="hidden lg:block sticky top-0 self-start max-h-screen overflow-y-auto scroll-none pt-12 pb-10">
           <Timeline entries={timeline} />
         </aside>
         <main className={`${column} pb-32 min-w-0`}>
-          <div id="about" className="scroll-mt-24 pt-16 md:pt-28">
+          <div id="about" className="scroll-mt-24 pt-6 md:pt-12">
             <h1 className="text-[32px] md:text-[44px] leading-[1.1] font-semibold tracking-tight text-[var(--color-phosphor-bright)]">
               ed bucaille
             </h1>
