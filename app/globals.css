@@ -109,3 +109,13 @@
 body:has([role="dialog"]) .view-toggle {
   display: none;
 }
+
+/* site image strips run to the window's right edge. On wide screens the
+   content column sits in a 1fr|140px|1fr|760px|1fr grid capped at 1100px
+   (see Site.tsx), so the distance to the edge is the column padding,
+   one 1fr gap and half of whatever the cap leaves outside */
+@media (min-width: 64rem) {
+  .bleed-right {
+    margin-right: calc(-40px - (min(100vw, 1100px) - 900px) / 3 - (100vw - min(100vw, 1100px)) / 2);
+  }
+}
