@@ -2,13 +2,6 @@ import { ProjectBlock } from "./ProjectBlock";
 import { Timeline, type TimelineEntry } from "./Timeline";
 import { contact, intro, playground, projects, work } from "@/lib/site-content";
 
-const sections = [
-  { id: "about", label: "about" },
-  { id: "work", label: "work" },
-  { id: "playground", label: "playground" },
-  { id: "contact", label: "contact" },
-];
-
 // the rail sits left of the content column on wide screens
 const shell = "mx-auto w-full max-w-[760px] lg:max-w-[1008px] lg:grid lg:grid-cols-[200px_760px] lg:gap-x-12";
 const column = "px-5 md:px-10";
@@ -41,22 +34,8 @@ export function Site() {
       data-view-root="site"
       className="absolute inset-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-hidden bg-[var(--color-bg)] font-sans text-[15px] leading-relaxed"
     >
-      <header className="lg:hidden sticky top-0 z-30 bg-[var(--color-bg)]/90 backdrop-blur-sm">
-        <div className={`${shell} h-12 md:h-16 items-center`}>
-          <div className={`${column} h-full flex items-center gap-6`}>
-            <a href="#top" className="hidden sm:block font-semibold text-[var(--color-phosphor-bright)]">
-              ed bucaille
-            </a>
-            <nav className="flex gap-4 text-[14px] text-[var(--color-phosphor-dim)]">
-              {sections.map((s) => (
-                <a key={s.id} href={`#${s.id}`} className="hover:text-[var(--color-phosphor-bright)] transition-colors">
-                  {s.label}
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-      </header>
+      {/* no header: just room to breathe above the page */}
+      <div aria-hidden className="h-12 md:h-16" />
 
       <div id="top" className={shell}>
         <aside className="hidden lg:block sticky top-0 self-start max-h-screen overflow-y-auto scroll-none pt-28 pb-10">
