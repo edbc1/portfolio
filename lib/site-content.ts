@@ -428,13 +428,12 @@ export const work: { id: string; role: string }[] = [
   { id: "pimento", role: "freelance founding designer" },
   { id: "tocco", role: "founding designer" },
   { id: "tadaa", role: "co-founder & cpo" },
-  { id: "rdv", role: "freelance designer" },
   { id: "sourceful", role: "founding designer" },
   { id: "accenture", role: "consultant" },
 ];
 
 /** side projects + experiments, newest first */
-export const playground = ["simple-works", "gradium", "moipresident", "azom", "ride-on"];
+export const playground = ["simple-works", "gradium", "moipresident", "azom", "rdv", "ride-on"];
 
 export const contact = {
   email: "edouard.bucaille@gmail.com",
