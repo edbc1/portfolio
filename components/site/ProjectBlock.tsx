@@ -165,7 +165,7 @@ function Row({
     </>
   );
   const archived = row.status === "archived";
-  const rowClass = `flex flex-col sm:flex-row sm:items-baseline gap-x-4 gap-y-0.5 py-2.5 ${archived ? "opacity-60" : ""}`;
+  const rowClass = `flex flex-col sm:flex-row sm:items-baseline gap-x-4 gap-y-0.5 py-1.5 leading-snug ${archived ? "opacity-60" : ""}`;
 
   if (!hasImages) {
     return <li className={rowClass}>{content}</li>;
