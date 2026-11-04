@@ -6,8 +6,6 @@ export type TimelineEntry = {
   /** id of the element on the page this entry jumps to */
   id: string;
   label: string;
-  /** shown under the label (years) */
-  meta?: string;
   /** section heading vs. an item inside a section */
   kind: "section" | "item";
 };
@@ -67,11 +65,6 @@ export function Timeline({ entries }: { entries: TimelineEntry[] }) {
                   >
                     {e.label}
                   </span>
-                  {e.meta && (
-                    <span className={`block text-[11px] leading-4 ${on ? "text-[var(--color-phosphor-dim)]" : "text-[var(--color-phosphor-faint)]"}`}>
-                      {e.meta}
-                    </span>
-                  )}
                 </span>
               </a>
             </li>

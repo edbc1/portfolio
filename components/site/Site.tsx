@@ -18,11 +18,8 @@ const timeline: TimelineEntry[] = [
   { id: "work", label: "work", kind: "section" },
   ...work
     .filter((w) => projects[w.id])
-    .map((w): TimelineEntry => ({ id: projects[w.id].id, label: projects[w.id].title, meta: projects[w.id].year, kind: "item" })),
+    .map((w): TimelineEntry => ({ id: projects[w.id].id, label: projects[w.id].title, kind: "item" })),
   { id: "playground", label: "playground", kind: "section" },
-  ...playground
-    .filter((id) => projects[id])
-    .map((id): TimelineEntry => ({ id, label: projects[id].title, meta: projects[id].year, kind: "item" })),
   { id: "contact", label: "contact", kind: "section" },
 ];
 
