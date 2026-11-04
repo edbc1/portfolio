@@ -60,7 +60,7 @@ export const projects: Record<string, Project> = {
       { tag: "Product", text: "Create internal skills to build faster app onboarding", status: "live" },
       { tag: "Product", text: "Create internal skills to reduce App Store review time", status: "live" },
       { tag: "Design", text: "Replace current toolstack (Amplitude, Adjust, Superwall) with internal tools", status: "live" },
-      { tag: "Design", text: "Build 150 apps in 2025 (Off-duty, Departure, Ingredex, etc.)" },
+      { tag: "Design", text: "Build 150 apps in 2026 (Off-duty, Departure, Ingredex, etc.)" },
       { tag: "Growth", text: "Build creatives ads across our scaling apps" },
       { tag: "People", text: "Open the Barcelona office for internal mobility", status: "soon" },
     ],
