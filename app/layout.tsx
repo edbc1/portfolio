@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "personal/os — ed bucaille",
+  title: "ed bucaille — product designer",
   description:
-    "Portfolio of Ed Bucaille — product designer with 7 years of experience. Terminal edition.",
+    "Portfolio of Ed Bucaille — product designer with 7 years of experience.",
   openGraph: {
-    title: "personal/os — ed bucaille",
+    title: "ed bucaille — product designer",
     description:
-      "Portfolio of Ed Bucaille — product designer with 7 years of experience. Terminal edition.",
+      "Portfolio of Ed Bucaille — product designer with 7 years of experience.",
     type: "website",
   },
 };

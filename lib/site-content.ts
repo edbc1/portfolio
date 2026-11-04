@@ -1,17 +1,17 @@
-export type TermImage = {
+export type ProjectImage = {
   src?: string;
   caption: string;
   alt?: string;
 };
 
-export type TermProject = {
+export type Project = {
   id: string;
   title: string;
   year: string;
   tag: string;
   oneLiner: string;
   body: string[];
-  images: TermImage[];
+  images: ProjectImage[];
   links?: { label: string; url: string; description?: string }[];
   linksTitle?: string;
   /** wrap every image in a device shell (phone screenshots) */
@@ -20,23 +20,7 @@ export type TermProject = {
   childGroups?: { title: string; ids: string[] }[];
 };
 
-export type TermOption = {
-  number: number;
-  command: string;
-  label: string;
-  hint?: string;
-};
-
-export type TermRoute = {
-  id: string;
-  parent?: string;
-  greeting?: string[];
-  /** projects shown inline under the greeting, no click needed */
-  feed?: string[];
-  options: TermOption[];
-};
-
-export const projects: Record<string, TermProject> = {
+export const projects: Record<string, Project> = {
   rocapine: {
     id: "rocapine",
     title: "rocapine",
@@ -373,83 +357,34 @@ export const projects: Record<string, TermProject> = {
   },
 };
 
-const projectOption = (n: number, id: string): TermOption => {
-  const p = projects[id];
-  return {
-    number: n,
-    command: `open ${id}`,
-    label: p.title,
-    hint: `${p.year} · ${p.tag}`,
-  };
-};
+export const intro = [
+  "hey, thanks for stopping by.",
+  "i'm ed, product designer with 7 years of exp., based in amsterdam, currently leading product & design at rocapine.",
+];
 
-export const routes: Record<string, TermRoute> = {
-  root: {
-    id: "root",
-    greeting: [
-      "hey, thanks for stopping by.",
-      "i'm ed, product designer with 7 years of exp.,",
-      "based in amsterdam, currently leading product & design at rocapine.",
-      "what would you like to know?",
-    ],
-    options: [
-      { number: 1, command: "about", label: "about", hint: "who i am, how i work" },
-      { number: 2, command: "work", label: "work", hint: "recent projects + case studies" },
-      { number: 3, command: "playground", label: "playground", hint: "side projects + experiments" },
-      { number: 4, command: "contact", label: "contact", hint: "email, cv, socials" },
-    ],
-  },
-  work: {
-    id: "work",
-    parent: "root",
-    options: [
-      { number: 1, command: "open rocapine", label: "rocapine", hint: "2024 — current · consumer apps · lead product & design" },
-      { number: 2, command: "open pimento", label: "pimento (acq. by Mistral AI)", hint: "2024 · Genai · freelance founding designer" },
-      { number: 3, command: "open tocco", label: "tocco", hint: "2023 — 24 · marketplace · founding designer" },
-      { number: 4, command: "open tadaa", label: "tadaa", hint: "2022 — 2023 · saas · co-founder & cpo" },
-      { number: 5, command: "open rdv", label: "rdv", hint: "2021 · consumer · freelance designer" },
-      { number: 6, command: "open sourceful", label: "sourceful", hint: "2021 — 22 · marketplace · founding designer" },
-      { number: 7, command: "open accenture", label: "accenture", hint: "2019 — 21 · AI · consultant" },
-    ],
-  },
-  about: {
-    id: "about",
-    parent: "root",
-    greeting: [
-      "Product designer with 7 years of exp. in early-stage startups",
-      "I work at the intersection of design, product, and engineering.",
-      "I thrive in handyman roles with extreme ownership, where the",
-      "designer actually ships (design, engineering, branding, you name it).",
-      "",
-      "currently leading the product & design team at rocapine — a mobile",
-      "consumer app studio shipping ~150 apps a year.",
-      "",
-      "Previously: head of design & product at tocco, founding designer at", 
-      "Pimento (acq. by Mistral AI founding designer at sourceful, and a",
-      "stint as a data consultant at accenture in london.",
-    ],
-    options: [
-      { number: 1, command: "work", label: "see my work", hint: "recent projects" },
-      { number: 2, command: "contact", label: "get in touch", hint: "email + socials" },
-      { number: 3, command: "back", label: "back", hint: "return to main menu" },
-    ],
-  },
-  playground: {
-    id: "playground",
-    parent: "root",
-    feed: ["simple-works", "gradium", "moipresident", "azom", "ride-on"],
-    options: [
-      { number: 1, command: "back", label: "back", hint: "return to main menu" },
-    ],
-  },
-  contact: {
-    id: "contact",
-    parent: "root",
-    options: [
-      { number: 1, command: "email", label: "send an email", hint: "opens your mail client" },
-      { number: 2, command: "linkedin", label: "open linkedin", hint: "linkedin.com/in/edouardbucaille" },
-      { number: 3, command: "cv", label: "download cv", hint: "pdf · ~1mb" },
-      { number: 4, command: "back", label: "back", hint: "return to main menu" },
-    ],
-  },
+export const about = [
+  "Product designer with 7 years of exp. in early-stage startups. I work at the intersection of design, product, and engineering.",
+  "I thrive in handyman roles with extreme ownership, where the designer actually ships (design, engineering, branding, you name it).",
+  "currently leading the product & design team at rocapine — a mobile consumer app studio shipping ~150 apps a year.",
+  "Previously: head of design & product at tocco, founding designer at Pimento (acq. by Mistral AI), founding designer at sourceful, and a stint as a data consultant at accenture in london.",
+];
+
+/** experience, newest first, with the role held */
+export const work: { id: string; role: string }[] = [
+  { id: "rocapine", role: "lead product & design" },
+  { id: "pimento", role: "freelance founding designer" },
+  { id: "tocco", role: "founding designer" },
+  { id: "tadaa", role: "co-founder & cpo" },
+  { id: "rdv", role: "freelance designer" },
+  { id: "sourceful", role: "founding designer" },
+  { id: "accenture", role: "consultant" },
+];
+
+/** side projects + experiments, newest first */
+export const playground = ["simple-works", "gradium", "moipresident", "azom", "ride-on"];
+
+export const contact = {
+  email: "edouard.bucaille@gmail.com",
+  linkedin: "https://www.linkedin.com/in/edouardbucaille/",
+  cv: "/edouard-bucaille-cv.pdf",
 };

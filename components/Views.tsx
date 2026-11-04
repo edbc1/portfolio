@@ -41,7 +41,7 @@ export function Views() {
         onClick={toggle}
         aria-label={`switch to ${view === "site" ? "terminal" : "default"} view`}
         aria-pressed={view === "terminal"}
-        className="fixed top-3 right-4 md:top-5 md:right-6 z-[70] flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-[var(--color-bg)] text-[var(--color-phosphor-dim)] hover:text-[var(--color-phosphor-bright)] hover:bg-[var(--color-phosphor-ghost)] transition-colors text-[13px] leading-6 no-select"
+        className="view-toggle fixed top-3 right-4 md:top-5 md:right-6 z-[70] flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-[var(--color-bg)] text-[var(--color-phosphor-dim)] hover:text-[var(--color-phosphor-bright)] hover:bg-[var(--color-phosphor-ghost)] transition-colors text-[13px] leading-6 no-select"
       >
         <span aria-hidden className="inline-block w-[10px] h-[10px] rounded-full border border-current overflow-hidden relative">
           <span className={`absolute inset-y-0 left-0 w-1/2 bg-current ${view === "site" ? "" : "translate-x-full"} transition-transform duration-200`} />

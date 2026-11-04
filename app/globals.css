@@ -103,3 +103,8 @@
   -webkit-user-select: none;
   user-select: none;
 }
+
+/* the view toggle floats above both views; keep it out of the way of open lightboxes */
+body:has([role="dialog"]) .view-toggle {
+  display: none;
+}
