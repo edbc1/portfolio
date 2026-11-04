@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { Site } from "./site/Site";
 import { Terminal } from "./terminal/Terminal";
 import { pixelTransition } from "./pixelTransition";
+import { terminalEnabled } from "@/lib/views";
 
 type View = "site" | "terminal";
 
@@ -32,6 +33,8 @@ export function Views() {
       } catch {}
     });
   };
+
+  if (!terminalEnabled) return <Site />;
 
   return (
     <>

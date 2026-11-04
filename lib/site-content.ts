@@ -140,6 +140,17 @@ export const projects: Record<string, Project> = {
       "Designed the product + design system (600+ users).",
       "Front-end engineering, sales, product & design.",
     ],
+    rows: [
+      { tag: "Product", text: "Conducted 450 interviews with Product teams", status: "archived" },
+      { tag: "Design", text: "Design system", status: "archived" },
+      { tag: "Design", text: "Website (webflow)", status: "archived" },
+      { tag: "Design", text: "Canvas view", status: "archived" },
+      { tag: "Tech", text: "Frontend development of the software", status: "archived" },
+      { tag: "Design", text: "Notion-like side panel", status: "archived" },
+      { tag: "Growth", text: "Created an organic slack community with 500 early users", status: "archived" },
+      { tag: "Product", text: "Weekly AB tests with 50 power user group", status: "archived" },
+      { tag: "Design", text: "People permissions & rules", status: "archived" },
+    ],
     images: [],
   },
   rdv: {

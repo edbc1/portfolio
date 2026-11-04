@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { terminalEnabled } from "@/lib/views";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,9 @@ export const metadata: Metadata = {
 };
 
 // set view before first paint so there is no flash of the wrong palette
-const viewScript = `try{if(localStorage.getItem("view")==="terminal")document.documentElement.dataset.view="terminal"}catch(e){}`;
+const viewScript = terminalEnabled
+  ? `try{if(localStorage.getItem("view")==="terminal")document.documentElement.dataset.view="terminal"}catch(e){}`
+  : "";
 
 export default function RootLayout({
   children,
@@ -39,7 +42,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: viewScript }} />
+        {viewScript && <script dangerouslySetInnerHTML={{ __html: viewScript }} />}
       </head>
       <body className="h-full">{children}</body>
     </html>
