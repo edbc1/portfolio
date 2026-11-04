@@ -150,8 +150,8 @@ function Row({
       <span
         className={
           hasImages
-            ? "flex-1 text-[var(--color-phosphor-bright)] underline underline-offset-4 decoration-[var(--color-border-bright)] group-hover:decoration-current"
-            : "flex-1 text-[var(--color-phosphor)]"
+            ? "flex-1 text-[14px] text-[var(--color-phosphor-bright)] underline underline-offset-4 decoration-[var(--color-border-bright)] group-hover:decoration-current"
+            : "flex-1 text-[14px] text-[var(--color-phosphor)]"
         }
       >
         {row.text}

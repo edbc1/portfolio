@@ -21,7 +21,7 @@ const linkClass =
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-20 pt-16 md:pt-24">
+    <section id={id} className="scroll-mt-20 mt-12 md:mt-16 border-t border-[var(--color-border)] pt-10 md:pt-12">
       <h2 className="mb-8 text-[13px] text-[var(--color-phosphor-faint)]">{title}</h2>
       {children}
     </section>
