@@ -28,8 +28,8 @@ export type Project = {
   images: ProjectImage[];
   /** detail rows listed under the body */
   rows?: ProjectRow[];
-  links?: { label: string; url: string; description?: string }[];
-  linksTitle?: string;
+  /** shown at the end of the title line */
+  links?: { label: string; url: string }[];
   /** wrap every image in a device shell (phone screenshots) */
   imageFrame?: "phone";
   /** groups of project ids rendered inline under this one (e.g. apps shipped at a company) */
@@ -45,7 +45,7 @@ export const projects: Record<string, Project> = {
     oneLiner: "Founding designer in a mobile-app wellness studio shipping ~150 apps a year.",
     body: [
       "Leading the product & design team (6 people). We ship a new app every day.",
-      "To achieve this velocity, we build our own CLIs, skills and internal tools",
+      "To achieve this velocity, we build our own CLIs, skills and internal tools.",
       "The team is made of 100% AI builders moving from Figma to Claude code.",
     ],
     rows: [
@@ -78,9 +78,9 @@ export const projects: Record<string, Project> = {
     tag: "genai",
     oneLiner: "Freelance gig — Gen AI to create, edit, and upscale any image",
     body: [
-      "Founding product designer working on the Product (generator + editor interface),", 
-      "the visuals, and the website. Referred to as the \"French Midjourney\"",
-      "Worked with the CEO and the Dev team to increase D1 and D7 retention",
+      "Founding product designer working on the Product (generator + editor interface),",
+      "the visuals, and the website. Referred to as the \"French Midjourney\".",
+      "Worked with the CEO and the Dev team to increase D1 and D7 retention.",
     ],
     rows: [
       { tag: "Branding", text: "Website iteration #1", status: "archived" },
@@ -106,9 +106,9 @@ export const projects: Record<string, Project> = {
     tag: "sustainability",
     oneLiner: "sustainable materials marketplace with a 5,000-material library",
     body: [
-      "Head of design & product — 1st employee, founding designer post pre-seed ($1.4m)",
-      "Led sales, product & design. shipped the platform used by 100k+ users",
-      "Built the discovery flow + supplier↔brand co-development surface",
+      "Head of design & product — 1st employee, founding designer post pre-seed ($1.4m).",
+      "Led sales, product & design. Shipped the platform used by 100k+ users.",
+      "Built the discovery flow + supplier↔brand co-development surface.",
     ],
     rows: [
       { tag: "Branding", text: "Logo #1", status: "live", images: [{ src: "/projects/tocco/1.webp", caption: "brand" }] },
@@ -136,7 +136,7 @@ export const projects: Record<string, Project> = {
     tag: "saas · co-founder",
     oneLiner: "tool to make any product team process actionable and collaborative.",
     body: [
-      "Co-founder & CPO. managed a slack community of 450 product experts.",
+      "Co-founder & CPO. Managed a slack community of 450 product experts.",
       "Designed the product + design system (600+ users).",
       "Front-end engineering, sales, product & design.",
     ],
@@ -149,9 +149,9 @@ export const projects: Record<string, Project> = {
     tag: "branding & design",
     oneLiner: "b2c app to find the coolest events and places in your city.",
     body: [
-      "freelance founding designer on rendezvous.",
-      "designed the discovery feed + map.",
-      "shaped the editorial voice and brand system.",
+      "Freelance founding designer on rendezvous.",
+      "Designed the discovery feed + map.",
+      "Shaped the editorial voice and brand system.",
     ],
     images: [
       { src: "/projects/rdv/img1.avif", caption: "discovery feed" },
@@ -168,8 +168,8 @@ export const projects: Record<string, Project> = {
     oneLiner: "sustainable b2b packaging with an in-house customisation tool.",
     body: [
       "1st product designer role between Seed ($12m) and Series A ($20m).",
-      "built the design practices and implemented processes.",
-      "led the in-browser packaging configurator and quote flow.",
+      "Built the design practices and implemented processes.",
+      "Led the in-browser packaging configurator and quote flow.",
     ],
     rows: [
       { tag: "Design", text: "New item funnel", status: "live", images: [{ src: "/projects/sourceful/8.webp", caption: "ai packaging brief" }] },

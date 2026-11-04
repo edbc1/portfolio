@@ -22,8 +22,6 @@ export function ProjectBlock({
 }) {
   const [zoom, setZoom] = useState<ZoomTarget | null>(null);
   const links = project.links ?? [];
-  const described = links.filter((l) => l.description);
-  const plain = links.filter((l) => !l.description);
   const childGroups = (project.childGroups ?? [])
     .map((g) => ({ ...g, ids: g.ids.filter((id) => projects[id]) }))
     .filter((g) => g.ids.length > 0);
@@ -43,25 +41,38 @@ export function ProjectBlock({
 
   return (
     <article className={nested ? "mb-12" : "mb-20"}>
-      <h3
-        className={
-          nested
-            ? "text-[17px] font-semibold text-[var(--color-phosphor-bright)]"
-            : "text-[22px] font-semibold tracking-tight text-[var(--color-phosphor-bright)]"
-        }
-      >
-        {project.title}
-      </h3>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+        <h3
+          className={
+            nested
+              ? "text-[17px] font-semibold text-[var(--color-phosphor-bright)]"
+              : "text-[22px] font-semibold tracking-tight text-[var(--color-phosphor-bright)]"
+          }
+        >
+          {project.title}
+        </h3>
+        {links.length > 0 && (
+          <div className="flex flex-wrap gap-x-4 text-[14px]">
+            {links.map((l) => (
+              <a
+                key={l.url}
+                href={l.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-[var(--color-phosphor-dim)] underline underline-offset-4 decoration-[var(--color-border-bright)] hover:text-[var(--color-phosphor-bright)] hover:decoration-current"
+              >
+                {l.label} ↗
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
       <div className="mt-1 text-[13px] text-[var(--color-phosphor-faint)]">
         {[project.year, role ?? project.tag].join(" · ")}
       </div>
       <p className="mt-3 text-[var(--color-phosphor-bright)]">{project.oneLiner}</p>
       {project.body.length > 0 && (
-        <ul className="mt-3 space-y-1.5 text-[var(--color-phosphor-dim)]">
-          {project.body.map((line, i) => (
-            <li key={i}>{line}</li>
-          ))}
-        </ul>
+        <p className="mt-3 text-justify hyphens-auto text-[var(--color-phosphor-dim)]">{project.body.join(" ")}</p>
       )}
 
       {project.rows && project.rows.length > 0 && (
@@ -93,43 +104,6 @@ export function ProjectBlock({
               />
             ))}
           </div>
-        </div>
-      )}
-
-      {described.length > 0 && (
-        <div className="mt-5">
-          {project.linksTitle && <div className="mb-2 text-[var(--color-phosphor-dim)]">{project.linksTitle}</div>}
-          <ul className="space-y-1.5">
-            {described.map((l) => (
-              <li key={l.url}>
-                <a
-                  href={l.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[var(--color-phosphor-bright)] underline underline-offset-4 decoration-[var(--color-border-bright)] hover:decoration-current"
-                >
-                  {l.label}
-                </a>
-                <span className="text-[var(--color-phosphor-faint)] ml-2">{l.description}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {plain.length > 0 && (
-        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
-          {plain.map((l) => (
-            <a
-              key={l.url}
-              href={l.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[var(--color-phosphor-bright)] underline underline-offset-4 decoration-[var(--color-border-bright)] hover:decoration-current"
-            >
-              {l.label} ↗
-            </a>
-          ))}
         </div>
       )}
 
