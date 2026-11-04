@@ -3,7 +3,7 @@ import { Timeline, type TimelineEntry } from "./Timeline";
 import { contact, intro, playground, projects, work } from "@/lib/site-content";
 
 // the rail sits left of the content column on wide screens
-const shell = "mx-auto w-full max-w-[760px] lg:max-w-[1008px] lg:grid lg:grid-cols-[200px_760px] lg:gap-x-12";
+const shell = "mx-auto w-full max-w-[760px] lg:max-w-[992px] lg:grid lg:grid-cols-[200px_760px] lg:gap-x-8";
 const column = "px-5 md:px-10";
 
 const timeline: TimelineEntry[] = [
@@ -38,7 +38,7 @@ export function Site() {
       <div aria-hidden className="h-12 md:h-16" />
 
       <div id="top" className={shell}>
-        <aside className="hidden lg:block sticky top-0 self-start max-h-screen overflow-y-auto scroll-none pt-12 pb-10">
+        <aside className="hidden lg:block sticky top-0 self-start max-h-screen overflow-y-auto scroll-none pl-10 pt-12 pb-10">
           <Timeline entries={timeline} />
         </aside>
         <main className={`${column} pb-32 min-w-0`}>

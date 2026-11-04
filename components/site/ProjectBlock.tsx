@@ -89,7 +89,7 @@ export function ProjectBlock({
       )}
 
       {project.images.length > 0 && (
-        <div className="mt-6 -ml-5 md:-ml-10 mr-[min(-1.25rem,calc(340px-50vw))] md:mr-[min(-2.5rem,calc(340px-50vw))] lg:mr-[min(-2.5rem,calc(464px-50vw))]">
+        <div className="mt-6 -ml-5 md:-ml-10 mr-[min(-1.25rem,calc(340px-50vw))] md:mr-[min(-2.5rem,calc(340px-50vw))] lg:mr-[min(-2.5rem,calc(456px-50vw))]">
           <div className="flex gap-3 overflow-x-auto overflow-y-hidden scroll-none px-5 md:px-10 pb-2">
             {project.images.map((img, i) => (
               <ImageTile
