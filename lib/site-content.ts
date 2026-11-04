@@ -60,7 +60,7 @@ export const projects: Record<string, Project> = {
       { tag: "Branding", text: "Visual branding assets on socials (linkedin, instagram, etc.)", images: [{ src: "/projects/rocapine/socials-1.webp", caption: "socials — linkedin cover, green" }, { src: "/projects/rocapine/socials-2.webp", caption: "socials — banner, we craft apps" }, { src: "/projects/rocapine/socials-3.webp", caption: "socials — we craft apps" }] },
       { tag: "People", text: "Designed Peer Performance Review system across the company", status: "live" },
       { tag: "Product", text: "Decrease App delivery time from 2 weeks to 2 days", status: "live" },
-      { tag: "Design", text: "Publishing platform to monitor apps KPIs and share results with studios in one tool", status: "live" },
+      { tag: "Design", text: "Publishing platform to monitor apps KPIs and share results with studios in one tool", status: "live", images: [{ src: "/projects/rocapine/publishing-platform-1.webp", caption: "publishing platform — work on next" }] },
       { tag: "Branding", text: "Website iteration #3", status: "live", images: [{ src: "/projects/rocapine/website-1.webp", caption: "rocapi.ne — home screen" }, { src: "/projects/rocapine/website-2.webp", caption: "rocapi.ne — manifesto" }, { src: "/projects/rocapine/website-3.webp", caption: "rocapi.ne — values" }, { src: "/projects/rocapine/website-4.webp", caption: "rocapi.ne — team" }] },
       { tag: "Product", text: "Create internal skills to build faster app onboarding", status: "live" },
       { tag: "Product", text: "Create internal skills to reduce App Store review time", status: "live" },
