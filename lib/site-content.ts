@@ -410,16 +410,12 @@ export const projects: Record<string, Project> = {
   },
 };
 
+/** the top of the page: who, how, where now, where before */
 export const intro = [
-  "hey, thanks for stopping by.",
-  "i'm ed, product designer with 7 years of exp., based in amsterdam, currently leading product & design at rocapine.",
-];
-
-export const about = [
-  "Product designer with 7 years of exp. in early-stage startups. I work at the intersection of design, product, and engineering.",
-  "I thrive in handyman roles with extreme ownership, where the designer actually ships (design, engineering, branding, you name it).",
-  "currently leading the product & design team at rocapine — a mobile consumer app studio shipping ~150 apps a year.",
-  "Previously: head of design & product at tocco, founding designer at Pimento (acq. by Mistral AI), founding designer at sourceful, and a stint as a data consultant at accenture in london.",
+  "Hey, thanks for stopping by. I'm Ed, a product designer based in Amsterdam with 7 years of experience in early-stage startups, working at the intersection of design, product and engineering.",
+  "I thrive in chaotic environments with a high sense of urgency: no HR, no processes, nothing built yet, high uncertainty. Handyman roles with extreme ownership, where the designer actually ships (design, engineering, branding, you name it).",
+  "Currently leading the product & design team at rocapine, a mobile consumer app studio shipping ~150 apps a year.",
+  "Previously: head of design & product at tocco, founding designer at pimento (acq. by Mistral AI) and sourceful, and a data consultant at accenture in London.",
 ];
 
 /** experience, newest first, with the role held */

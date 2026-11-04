@@ -1,6 +1,6 @@
 import { ProjectBlock } from "./ProjectBlock";
 import { Timeline, type TimelineEntry } from "./Timeline";
-import { about, contact, intro, playground, projects, work } from "@/lib/site-content";
+import { contact, intro, playground, projects, work } from "@/lib/site-content";
 
 const sections = [
   { id: "about", label: "about" },
@@ -66,24 +66,16 @@ export function Site() {
           <Timeline entries={timeline} />
         </aside>
         <main className={`${column} pb-32 min-w-0`}>
-          <div className="pt-16 md:pt-28">
+          <div id="about" className="scroll-mt-24 pt-16 md:pt-28">
             <h1 className="text-[32px] md:text-[44px] leading-[1.1] font-semibold tracking-tight text-[var(--color-phosphor-bright)]">
               ed bucaille
             </h1>
-            <div className="mt-5 max-w-[560px] space-y-2 text-[17px] text-[var(--color-phosphor-dim)]">
+            <div className="mt-6 max-w-[600px] space-y-4 text-[17px] text-[var(--color-phosphor-dim)] [&>p:first-child]:text-[var(--color-phosphor-bright)]">
               {intro.map((line, i) => (
                 <p key={i}>{line}</p>
               ))}
             </div>
           </div>
-
-          <Section id="about" title="about">
-            <div className="space-y-4 text-[var(--color-phosphor)]">
-              {about.map((line, i) => (
-                <p key={i}>{line}</p>
-              ))}
-            </div>
-          </Section>
 
           <Section id="work" title="work">
             {work
