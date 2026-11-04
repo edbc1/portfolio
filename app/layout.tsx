@@ -42,7 +42,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {viewScript && <script dangerouslySetInnerHTML={{ __html: viewScript }} />}
+        {/* a ternary, not &&: an empty string here would render a text node in <head> and break hydration */}
+        {viewScript ? <script dangerouslySetInnerHTML={{ __html: viewScript }} /> : null}
       </head>
       <body className="h-full">{children}</body>
     </html>
