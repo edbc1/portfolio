@@ -49,7 +49,7 @@ export function Timeline({ entries }: { entries: TimelineEntry[] }) {
         {entries.map((e) => {
           const on = e.id === active || e.id === activeSection;
           return (
-            <li key={e.id} className={e.kind === "section" ? "mt-5 first:mt-0" : "mt-1.5 pl-[31px]"}>
+            <li key={e.id} className={e.kind === "section" ? "mt-5 first:mt-0" : "mt-1.5 pl-[23px]"}>
               <a href={`#${e.id}`} className="group relative flex gap-3 pl-0">
                 {e.kind === "section" && (
                   <span

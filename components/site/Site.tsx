@@ -11,7 +11,7 @@ const timeline: TimelineEntry[] = [
   { id: "work", label: "work", kind: "section" },
   ...work
     .filter((w) => projects[w.id])
-    .map((w): TimelineEntry => ({ id: projects[w.id].id, label: projects[w.id].title, kind: "item" })),
+    .map((w): TimelineEntry => ({ id: projects[w.id].id, label: projects[w.id].title.replace(/ \(.*\)$/, ""), kind: "item" })),
   { id: "playground", label: "playground", kind: "section" },
   { id: "contact", label: "contact", kind: "section" },
 ];
