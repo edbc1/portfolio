@@ -28,7 +28,7 @@ export function ProjectBlock({
     .map((g) => ({ ...g, ids: g.ids.filter((id) => projects[id]) }))
     .filter((g) => g.ids.length > 0);
 
-  const openZoom = (images: ProjectImage[], src: string) => {
+  const openZoom = (images: ProjectImage[], src: string, frame = project.imageFrame) => {
     const items: ZoomItem[] = images
       .filter((im): im is typeof im & { src: string } => !!im.src)
       .map((im) => ({
@@ -36,7 +36,7 @@ export function ProjectBlock({
         alt: im.alt ?? im.caption,
         caption: im.caption,
         isVideo: isVideoSrc(im.src),
-        frame: project.imageFrame,
+        frame,
       }));
     setZoom({ items, index: Math.max(0, items.findIndex((it) => it.src === src)) });
   };
@@ -67,7 +67,12 @@ export function ProjectBlock({
       {project.rows && project.rows.length > 0 && (
         <ul className="mt-5 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
           {project.rows.map((row, i) => (
-            <Row key={i} row={row} frame={project.imageFrame} onOpen={(src) => openZoom(row.images ?? [], src)} />
+            <Row
+              key={i}
+              row={row}
+              frame={row.imageFrame ?? project.imageFrame}
+              onOpen={(src) => openZoom(row.images ?? [], src, row.imageFrame ?? project.imageFrame)}
+            />
           ))}
         </ul>
       )}

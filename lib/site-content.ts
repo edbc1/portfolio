@@ -12,6 +12,8 @@ export type ProjectRow = {
   status?: "live" | "soon" | "archived";
   /** shown on hover (underlined row), click opens the gallery */
   images?: ProjectImage[];
+  /** overrides the project's imageFrame for this row's images */
+  imageFrame?: "phone";
 };
 
 export type Project = {
@@ -47,12 +49,12 @@ export const projects: Record<string, Project> = {
     rows: [
       { tag: "Branding", text: "Logo #1", status: "live" },
       { tag: "Branding", text: "Website iteration #1", status: "archived" },
-      { tag: "Design", text: "Onboarding studio to ship new apps without coding experience", status: "live" },
+      { tag: "Design", text: "Onboarding studio to ship new apps without coding experience", status: "live", images: [{ src: "/projects/onboarding-studio/1.webp", caption: "overview — what's live" }, { src: "/projects/onboarding-studio/2.webp", caption: "onboarding flow analytics" }, { src: "/projects/onboarding-studio/3.webp", caption: "user detail — why did they get a paywall?" }] },
       { tag: "People", text: "2 exceptional Product Managers with 3+ years of exp." },
       { tag: "Branding", text: "Website iteration #2", status: "archived" },
       { tag: "People", text: "4 promising Junior Product Managers talents" },
       { tag: "Product", text: "Decrease App delivery time from 2 months to 2 weeks", status: "archived" },
-      { tag: "Design", text: "Build 75 apps in 2025 (TDY, Harmony, Eve, Victus, etc.)" },
+      { tag: "Design", text: "Build 75 apps in 2025 (TDY, Harmony, Eve, Victus, etc.)", images: [{ src: "/projects/harmony/2.webp", caption: "harmony — today" }, { src: "/projects/harmony/3.webp", caption: "harmony — calendar" }, { src: "/projects/harmony/6.webp", caption: "harmony — cycle analytics" }], imageFrame: "phone" },
       { tag: "Branding", text: "Visual branding assets on socials (linkedin, instagram, etc.)" },
       { tag: "People", text: "Designed Peer Performance Review system across the company", status: "live" },
       { tag: "Product", text: "Decrease App delivery time from 2 weeks to 2 days", status: "live" },
@@ -61,7 +63,7 @@ export const projects: Record<string, Project> = {
       { tag: "Product", text: "Create internal skills to build faster app onboarding", status: "live" },
       { tag: "Product", text: "Create internal skills to reduce App Store review time", status: "live" },
       { tag: "Design", text: "Replace current toolstack (Amplitude, Adjust, Superwall) with internal tools", status: "live" },
-      { tag: "Design", text: "Build 150 apps in 2026 (Off-duty, Departure, Ingredex, etc.)" },
+      { tag: "Design", text: "Build 150 apps in 2026 (Off-duty, Departure, Ingredex, etc.)", images: [{ src: "/projects/off-duty/1.webp", caption: "off duty" }, { src: "/projects/departure/6.webp", caption: "departure" }, { src: "/projects/ingredex/1.webp", caption: "ingredex" }], imageFrame: "phone" },
       { tag: "Growth", text: "Build creatives ads across our scaling apps" },
       { tag: "People", text: "Open the Barcelona office for internal mobility", status: "soon" },
     ],
@@ -86,7 +88,7 @@ export const projects: Record<string, Project> = {
       { tag: "Branding", text: "Website iteration #1", status: "archived" },
       { tag: "Design", text: "Search experience to use referenced styles" },
       { tag: "Design", text: "Generation / Minimalist prompt bar with lowest amount of parameters", status: "archived" },
-      { tag: "Design", text: "Generation / Canvas with generated assets", status: "live" },
+      { tag: "Design", text: "Generation / Canvas with generated assets", status: "live", images: [{ src: "/projects/pimento/editor.mp4", caption: "editor demo" }] },
       { tag: "Design", text: "Generation / Parameters panel to fork generated assets", status: "live" },
       { tag: "Design", text: "Edit mode / Parameters panel", status: "live" },
       { tag: "Design", text: "Edit mode / Create upscale mode", status: "live" },
@@ -94,7 +96,7 @@ export const projects: Record<string, Project> = {
       { tag: "Design", text: "Edit mode / Create \"Add element\" mode", status: "live" },
       { tag: "Design", text: "Build whole Design system" },
       { tag: "Branding", text: "Website iteration #2", status: "live" },
-      { tag: "Design", text: "FTUE / Increase # of generated assets on D1" },
+      { tag: "Design", text: "FTUE / Increase # of generated assets on D1", images: [{ src: "/projects/pimento/2.webp", caption: "onboarding" }] },
     ],
     images: [
       { src: "/projects/pimento/1.webp", caption: "brand" },
@@ -115,15 +117,15 @@ export const projects: Record<string, Project> = {
       "Built the discovery flow + supplier↔brand co-development surface",
     ],
     rows: [
-      { tag: "Branding", text: "Logo #1", status: "live" },
+      { tag: "Branding", text: "Logo #1", status: "live", images: [{ src: "/projects/tocco/1.webp", caption: "brand" }] },
       { tag: "Branding", text: "Website iteration #1", status: "archived" },
-      { tag: "Design", text: "Search function" },
+      { tag: "Design", text: "Search function", images: [{ src: "/projects/tocco/2.webp", caption: "materials that create a cleaner tomorrow" }] },
       { tag: "Design", text: "Result page with online scraped data" },
-      { tag: "Design", text: "Supplier product page with digestible material information" },
+      { tag: "Design", text: "Supplier product page with digestible material information", images: [{ src: "/projects/tocco/4.webp", caption: "supplier profile — earth score" }] },
       { tag: "Branding", text: "Website iteration #2", status: "archived" },
       { tag: "Design", text: "Editorial newsletter to send latest trends to clients" },
       { tag: "Design", text: "Contact + pre-order form" },
-      { tag: "Design", text: "Generated 500+ visual materials assets to enhance result quality" },
+      { tag: "Design", text: "Generated 500+ visual materials assets to enhance result quality", images: [{ src: "/projects/tocco/3.webp", caption: "material renders" }, { src: "/projects/tocco/5.webp", caption: "material renders" }] },
       { tag: "Branding", text: "Website iteration #3", status: "archived" },
       { tag: "Growth", text: "GTM projects to get suppliers onboard" },
       { tag: "Branding", text: "Visual branding assets on socials (linkedin, instagram, etc.)" },
@@ -183,16 +185,16 @@ export const projects: Record<string, Project> = {
       "led the in-browser packaging configurator and quote flow.",
     ],
     rows: [
-      { tag: "Design", text: "New item funnel", status: "live" },
+      { tag: "Design", text: "New item funnel", status: "live", images: [{ src: "/projects/sourceful/10.webp", caption: "create new" }, { src: "/projects/sourceful/8.webp", caption: "ai packaging brief" }] },
       { tag: "Design", text: "Discover / Packaging library page", status: "live" },
-      { tag: "Design", text: "Discover / Packaging theme page", status: "live" },
-      { tag: "Design", text: "Select / Product page details (digestible data)", status: "live" },
+      { tag: "Design", text: "Discover / Packaging theme page", status: "live", images: [{ src: "/projects/sourceful/9.webp", caption: "design gallery" }] },
+      { tag: "Design", text: "Select / Product page details (digestible data)", status: "live", images: [{ src: "/projects/sourceful/2.webp", caption: "mailer box — presets" }] },
       { tag: "Design", text: "Select / Similar items section (recommendation upsell)", status: "live" },
-      { tag: "Branding", text: "Visuals iteration", status: "archived" },
+      { tag: "Branding", text: "Visuals iteration", status: "archived", images: [{ src: "/projects/sourceful/7.webp", caption: "packaging design" }] },
       { tag: "Design", text: "Build the whole Design system", status: "live" },
-      { tag: "Design", text: "Edit / Packaging 3D page", status: "live" },
-      { tag: "Design", text: "Edit / Parameters panel", status: "live" },
-      { tag: "Design", text: "Buy / Cart page", status: "live" },
+      { tag: "Design", text: "Edit / Packaging 3D page", status: "live", images: [{ src: "/projects/sourceful/1.webp", caption: "add tape — configurator" }] },
+      { tag: "Design", text: "Edit / Parameters panel", status: "live", images: [{ src: "/projects/sourceful/3.webp", caption: "artwork editor — filters" }] },
+      { tag: "Design", text: "Buy / Cart page", status: "live", images: [{ src: "/projects/sourceful/6.webp", caption: "order summary" }] },
     ],
     images: [
       { src: "/projects/sourceful/1.webp", caption: "add tape — configurator" },
