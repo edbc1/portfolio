@@ -182,6 +182,18 @@ export const projects: Record<string, Project> = {
       "built the design practices and implemented processes.",
       "led the in-browser packaging configurator and quote flow.",
     ],
+    rows: [
+      { tag: "Design", text: "New item funnel", status: "live" },
+      { tag: "Design", text: "Discover / Packaging library page", status: "live" },
+      { tag: "Design", text: "Discover / Packaging theme page", status: "live" },
+      { tag: "Design", text: "Select / Product page details (digestible data)", status: "live" },
+      { tag: "Design", text: "Select / Similar items section (recommendation upsell)", status: "live" },
+      { tag: "Branding", text: "Visuals iteration", status: "archived" },
+      { tag: "Design", text: "Build the whole Design system", status: "live" },
+      { tag: "Design", text: "Edit / Packaging 3D page", status: "live" },
+      { tag: "Design", text: "Edit / Parameters panel", status: "live" },
+      { tag: "Design", text: "Buy / Cart page", status: "live" },
+    ],
     images: [
       { src: "/projects/sourceful/1.webp", caption: "add tape — configurator" },
       { src: "/projects/sourceful/2.webp", caption: "mailer box — presets" },
