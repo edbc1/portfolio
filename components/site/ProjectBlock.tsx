@@ -36,7 +36,7 @@ export function ProjectBlock({
         alt: im.alt ?? im.caption,
         caption: im.caption,
         isVideo: isVideoSrc(im.src),
-        frame,
+        frame: im.frame ?? frame,
       }));
     setZoom({ items, index: Math.max(0, items.findIndex((it) => it.src === src)) });
   };
@@ -88,7 +88,7 @@ export function ProjectBlock({
                 caption={img.caption}
                 index={i}
                 total={project.images.length}
-                frame={project.imageFrame}
+                frame={img.frame ?? project.imageFrame}
                 onZoom={() => img.src && openZoom(project.images, img.src)}
               />
             ))}
@@ -220,7 +220,7 @@ function HoverPreview({
   x,
   y,
 }: {
-  images: { src: string; caption: string; alt?: string }[];
+  images: { src: string; caption: string; alt?: string; frame?: "phone" }[];
   frame?: "phone";
   x: number;
   y: number;
@@ -246,7 +246,7 @@ function HoverPreview({
         <div
           key={im.src}
           className={
-            frame === "phone"
+            (im.frame ?? frame) === "phone"
               ? "shrink-0 rounded-[16px] bg-black p-[3px] shadow-lg"
               : "shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elev)] overflow-hidden shadow-lg"
           }
@@ -259,7 +259,7 @@ function HoverPreview({
             <img
               src={im.src}
               alt={im.alt ?? im.caption}
-              className={frame === "phone" ? "h-full w-auto block rounded-[13px]" : "h-full w-auto block"}
+              className={(im.frame ?? frame) === "phone" ? "h-full w-auto block rounded-[13px]" : "h-full w-auto block"}
             />
           )}
         </div>

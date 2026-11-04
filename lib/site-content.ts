@@ -2,6 +2,8 @@ export type ProjectImage = {
   src?: string;
   caption: string;
   alt?: string;
+  /** overrides the row / project frame for this image */
+  frame?: "phone";
 };
 
 /** one line of detail under an experience: what was done there */
@@ -47,31 +49,27 @@ export const projects: Record<string, Project> = {
       "The team is made of 100% AI builders moving from Figma to Claude code.",
     ],
     rows: [
-      { tag: "Branding", text: "Logo #1", status: "live" },
+      { tag: "Branding", text: "Logo #1", status: "live", images: [{ src: "/projects/rocapine/logo-1.webp", caption: "logo — pink" }, { src: "/projects/rocapine/logo-2.webp", caption: "logo — black" }, { src: "/projects/rocapine/logo-3.webp", caption: "logo — photo, orange" }, { src: "/projects/rocapine/logo-4.webp", caption: "logo — photo, blue" }, { src: "/projects/rocapine/logo-5.webp", caption: "logo — photo, green" }] },
       { tag: "Branding", text: "Website iteration #1", status: "archived" },
-      { tag: "Design", text: "Onboarding studio to ship new apps without coding experience", status: "live", images: [{ src: "/projects/onboarding-studio/1.webp", caption: "overview — what's live" }, { src: "/projects/onboarding-studio/2.webp", caption: "onboarding flow analytics" }, { src: "/projects/onboarding-studio/3.webp", caption: "user detail — why did they get a paywall?" }] },
+      { tag: "Design", text: "Onboarding studio to ship new apps without coding experience", status: "live", images: [{ src: "/projects/onboarding-studio/1.webp", caption: "overview — what's live" }, { src: "/projects/onboarding-studio/3.webp", caption: "user detail — why did they get a paywall?" }] },
       { tag: "People", text: "2 exceptional Product Managers with 3+ years of exp." },
       { tag: "Branding", text: "Website iteration #2", status: "archived" },
       { tag: "People", text: "4 promising Junior Product Managers talents" },
       { tag: "Product", text: "Decrease App delivery time from 2 months to 2 weeks", status: "archived" },
-      { tag: "Design", text: "Build 75 apps in 2025 (TDY, Harmony, Eve, Victus, etc.)", images: [{ src: "/projects/harmony/2.webp", caption: "harmony — today" }, { src: "/projects/harmony/3.webp", caption: "harmony — calendar" }, { src: "/projects/harmony/6.webp", caption: "harmony — cycle analytics" }], imageFrame: "phone" },
+      { tag: "Design", text: "Build 75 apps in 2025 (TDY, Harmony, Eve, Victus, etc.)", images: [{ src: "/projects/tdy/1.webp", caption: "tdy — train like an athlete" }, { src: "/projects/tdy/2.webp", caption: "tdy — personal fitness coach" }, { src: "/projects/tdy/3.webp", caption: "tdy — transform your body" }, { src: "/projects/tdy/4.webp", caption: "tdy — adapt your trainings" }, { src: "/projects/tdy/5.webp", caption: "tdy — according to your mind type" }, { src: "/projects/tdy/6.webp", caption: "tdy — weekly performance score" }, { src: "/projects/harmony/1.webp", caption: "harmony — welcome", frame: "phone" }, { src: "/projects/harmony/2.webp", caption: "harmony — today — ovulation, day 15", frame: "phone" }, { src: "/projects/harmony/3.webp", caption: "harmony — calendar", frame: "phone" }, { src: "/projects/harmony/4.webp", caption: "harmony — tips — food for your phase", frame: "phone" }, { src: "/projects/harmony/5.webp", caption: "harmony — explore", frame: "phone" }, { src: "/projects/harmony/6.webp", caption: "harmony — profile — cycle analytics", frame: "phone" }, { src: "/projects/harmony/7.webp", caption: "harmony — periods recap", frame: "phone" }, { src: "/projects/harmony/8.webp", caption: "harmony — onboarding — your phases", frame: "phone" }, { src: "/projects/rocapine/eve-store.webp", caption: "eve — app store" }] },
       { tag: "Branding", text: "Visual branding assets on socials (linkedin, instagram, etc.)" },
       { tag: "People", text: "Designed Peer Performance Review system across the company", status: "live" },
       { tag: "Product", text: "Decrease App delivery time from 2 weeks to 2 days", status: "live" },
       { tag: "Design", text: "Publishing platform to monitor apps KPIs and share results with studios in one tool", status: "live" },
-      { tag: "Branding", text: "Website iteration #3", status: "live" },
+      { tag: "Branding", text: "Website iteration #3", status: "live", images: [{ src: "/projects/rocapine/website-1.webp", caption: "rocapi.ne — home screen" }, { src: "/projects/rocapine/website-2.webp", caption: "rocapi.ne — manifesto" }, { src: "/projects/rocapine/website-3.webp", caption: "rocapi.ne — values" }, { src: "/projects/rocapine/website-4.webp", caption: "rocapi.ne — team" }] },
       { tag: "Product", text: "Create internal skills to build faster app onboarding", status: "live" },
       { tag: "Product", text: "Create internal skills to reduce App Store review time", status: "live" },
-      { tag: "Design", text: "Replace current toolstack (Amplitude, Adjust, Superwall) with internal tools", status: "live" },
-      { tag: "Design", text: "Build 150 apps in 2026 (Off-duty, Departure, Ingredex, etc.)", images: [{ src: "/projects/off-duty/1.webp", caption: "off duty" }, { src: "/projects/departure/6.webp", caption: "departure" }, { src: "/projects/ingredex/1.webp", caption: "ingredex" }], imageFrame: "phone" },
+      { tag: "Design", text: "Replace current toolstack (Amplitude, Adjust, Superwall) with internal tools", status: "live", images: [{ src: "/projects/onboarding-studio/2.webp", caption: "onboarding flow analytics" }] },
+      { tag: "Design", text: "Build 150 apps in 2026 (Off-duty, Departure, Ingredex, etc.)", images: [{ src: "/projects/off-duty/1.webp", caption: "off duty — fall asleep in under 2 minutes" }, { src: "/projects/off-duty/2.webp", caption: "off duty — week 6 — major" }, { src: "/projects/off-duty/3.webp", caption: "off duty — the squad, recruit to captain" }, { src: "/projects/off-duty/4.webp", caption: "off duty — tonight's orders" }, { src: "/projects/off-duty/5.webp", caption: "off duty — why you should care about sleep" }, { src: "/projects/departure/1.webp", caption: "departure — welcome" }, { src: "/projects/departure/2.webp", caption: "departure — your travel profile" }, { src: "/projects/departure/3.webp", caption: "departure — your miles" }, { src: "/projects/departure/4.webp", caption: "departure — closest airport" }, { src: "/projects/departure/5.webp", caption: "departure — boarding pass" }, { src: "/projects/departure/6.webp", caption: "departure — where to?" }, { src: "/projects/departure/7.webp", caption: "departure — ready to board?" }, { src: "/projects/departure/8.webp", caption: "departure — your passport" }, { src: "/projects/ingredex/1.webp", caption: "ingredex — the dex — 442 / 819" }, { src: "/projects/ingredex/2.webp", caption: "ingredex — bell pepper, caught" }, { src: "/projects/ingredex/3.webp", caption: "ingredex — fruit" }, { src: "/projects/ingredex/4.webp", caption: "ingredex — in season now" }, { src: "/projects/ingredex/5.webp", caption: "ingredex — collector profile" }], imageFrame: "phone" },
       { tag: "Growth", text: "Build creatives ads across our scaling apps" },
       { tag: "People", text: "Open the Barcelona office for internal mobility", status: "soon" },
     ],
     images: [],
-    childGroups: [
-      { title: "Some of the tools I shipped", ids: ["onboarding-studio"] },
-      { title: "Some of the apps I shipped", ids: ["harmony", "tdy", "off-duty", "ingredex", "departure"] },
-    ],
   },
   pimento: {
     id: "pimento",
@@ -98,11 +96,7 @@ export const projects: Record<string, Project> = {
       { tag: "Branding", text: "Website iteration #2", status: "live" },
       { tag: "Design", text: "FTUE / Increase # of generated assets on D1", images: [{ src: "/projects/pimento/2.webp", caption: "onboarding" }] },
     ],
-    images: [
-      { src: "/projects/pimento/1.webp", caption: "brand" },
-      { src: "/projects/pimento/2.webp", caption: "onboarding" },
-      { src: "/projects/pimento/editor.mp4", caption: "editor demo" },
-    ],
+    images: [],
     links: [{ label: "pimento.design", url: "https://www.pimento.design/" }],
   },
   tocco: {
@@ -132,14 +126,7 @@ export const projects: Record<string, Project> = {
       { tag: "Branding", text: "Website iteration #4", status: "live" },
       { tag: "Growth", text: "Tocco Awards to attract new clients on the platform" },
     ],
-    images: [
-      { src: "/projects/tocco/1.webp", caption: "brand" },
-      { src: "/projects/tocco/2.webp", caption: "materials that create a cleaner tomorrow" },
-      { src: "/projects/tocco/3.webp", caption: "material library" },
-      { src: "/projects/tocco/4.webp", caption: "supplier profile — earth score" },
-      { src: "/projects/tocco/5.webp", caption: "sample box" },
-      { src: "/projects/tocco/6.webp", caption: "marketplace — trending themes" },
-    ],
+    images: [],
     links: [{ label: "tocco.earth", url: "https://tocco.earth/" }],
   },
   tadaa: {
@@ -185,8 +172,8 @@ export const projects: Record<string, Project> = {
       "led the in-browser packaging configurator and quote flow.",
     ],
     rows: [
-      { tag: "Design", text: "New item funnel", status: "live", images: [{ src: "/projects/sourceful/10.webp", caption: "create new" }, { src: "/projects/sourceful/8.webp", caption: "ai packaging brief" }] },
-      { tag: "Design", text: "Discover / Packaging library page", status: "live" },
+      { tag: "Design", text: "New item funnel", status: "live", images: [{ src: "/projects/sourceful/8.webp", caption: "ai packaging brief" }] },
+      { tag: "Design", text: "Discover / Packaging library page", status: "live", images: [{ src: "/projects/sourceful/10.webp", caption: "create new" }] },
       { tag: "Design", text: "Discover / Packaging theme page", status: "live", images: [{ src: "/projects/sourceful/9.webp", caption: "design gallery" }] },
       { tag: "Design", text: "Select / Product page details (digestible data)", status: "live", images: [{ src: "/projects/sourceful/2.webp", caption: "mailer box — presets" }] },
       { tag: "Design", text: "Select / Similar items section (recommendation upsell)", status: "live" },
@@ -196,18 +183,7 @@ export const projects: Record<string, Project> = {
       { tag: "Design", text: "Edit / Parameters panel", status: "live", images: [{ src: "/projects/sourceful/3.webp", caption: "artwork editor — filters" }] },
       { tag: "Design", text: "Buy / Cart page", status: "live", images: [{ src: "/projects/sourceful/6.webp", caption: "order summary" }] },
     ],
-    images: [
-      { src: "/projects/sourceful/1.webp", caption: "add tape — configurator" },
-      { src: "/projects/sourceful/2.webp", caption: "mailer box — presets" },
-      { src: "/projects/sourceful/3.webp", caption: "artwork editor — filters" },
-      { src: "/projects/sourceful/4.webp", caption: "shop + platform" },
-      { src: "/projects/sourceful/5.webp", caption: "tape configurator, v1" },
-      { src: "/projects/sourceful/6.webp", caption: "order summary" },
-      { src: "/projects/sourceful/7.webp", caption: "packaging design" },
-      { src: "/projects/sourceful/8.webp", caption: "ai packaging brief" },
-      { src: "/projects/sourceful/9.webp", caption: "design gallery" },
-      { src: "/projects/sourceful/10.webp", caption: "create new" },
-    ],
+    images: [],
     links: [{ label: "sourceful.com", url: "https://www.sourceful.com/" }],
   },
   accenture: {
