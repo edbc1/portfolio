@@ -41,13 +41,10 @@ export function Site() {
       data-view-root="site"
       className="absolute inset-0 overflow-y-auto overflow-x-hidden scroll-smooth scroll-hidden bg-[var(--color-bg)] font-sans text-[15px] leading-relaxed"
     >
-      <header className="sticky top-0 z-30 bg-[var(--color-bg)]/90 backdrop-blur-sm">
+      <header className="lg:hidden sticky top-0 z-30 bg-[var(--color-bg)]/90 backdrop-blur-sm">
         <div className={`${shell} h-12 md:h-16 items-center`}>
-          <a href="#top" className="hidden lg:block font-semibold text-[var(--color-phosphor-bright)]">
-            ed bucaille
-          </a>
-          <div className={`${column} h-full flex items-center gap-6 pr-24 md:pr-10`}>
-            <a href="#top" className="hidden sm:block lg:hidden font-semibold text-[var(--color-phosphor-bright)]">
+          <div className={`${column} h-full flex items-center gap-6`}>
+            <a href="#top" className="hidden sm:block font-semibold text-[var(--color-phosphor-bright)]">
               ed bucaille
             </a>
             <nav className="flex gap-4 text-[14px] text-[var(--color-phosphor-dim)]">
@@ -62,7 +59,7 @@ export function Site() {
       </header>
 
       <div id="top" className={shell}>
-        <aside className="hidden lg:block sticky top-24 self-start max-h-[calc(100vh-7rem)] overflow-y-auto scroll-none pt-16 pb-10">
+        <aside className="hidden lg:block sticky top-0 self-start max-h-screen overflow-y-auto scroll-none pt-28 pb-10">
           <Timeline entries={timeline} />
         </aside>
         <main className={`${column} pb-32 min-w-0`}>
