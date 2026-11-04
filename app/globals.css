@@ -112,10 +112,11 @@ body:has([role="dialog"]) .view-toggle {
 
 /* site image strips run to the window's right edge. On wide screens the
    content column sits in a 1fr|140px|1fr|760px|1fr grid capped at 1100px
-   (see Site.tsx), so the distance to the edge is the column padding,
-   one 1fr gap and half of whatever the cap leaves outside */
+   (see Site.tsx): up to 1100px wide the edge is 40px + (100vw - 900px) / 3
+   away, past it 40px + 200px / 3 + (100vw - 1100px) / 2. Written flat as a
+   min() of the two lines: lightningcss segfaults on the nested form */
 @media (min-width: 64rem) {
   .bleed-right {
-    margin-right: calc(-40px - (min(100vw, 1100px) - 900px) / 3 - (100vw - min(100vw, 1100px)) / 2);
+    margin-right: min(calc(260px - 33.3333vw), calc(443.3333px - 50vw));
   }
 }
