@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { projects, type Project } from "@/lib/site-content";
+import { projects, type Project, type ProjectImage, type ProjectRow } from "@/lib/site-content";
 
 type ZoomItem = { src: string; alt: string; caption: string; isVideo: boolean; frame?: "phone" };
 /** a gallery (all images of one project) opened at `index` */
@@ -28,8 +28,8 @@ export function ProjectBlock({
     .map((g) => ({ ...g, ids: g.ids.filter((id) => projects[id]) }))
     .filter((g) => g.ids.length > 0);
 
-  const openZoom = (src: string) => {
-    const items: ZoomItem[] = project.images
+  const openZoom = (images: ProjectImage[], src: string) => {
+    const items: ZoomItem[] = images
       .filter((im): im is typeof im & { src: string } => !!im.src)
       .map((im) => ({
         src: im.src,
@@ -64,6 +64,14 @@ export function ProjectBlock({
         </ul>
       )}
 
+      {project.rows && project.rows.length > 0 && (
+        <ul className="mt-5 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+          {project.rows.map((row, i) => (
+            <Row key={i} row={row} frame={project.imageFrame} onOpen={(src) => openZoom(row.images ?? [], src)} />
+          ))}
+        </ul>
+      )}
+
       {project.images.length > 0 && (
         <div className="mt-6 -mx-5 md:-mx-10">
           <div className="flex gap-3 overflow-x-auto overflow-y-hidden scroll-none px-5 md:px-10 pb-2">
@@ -76,7 +84,7 @@ export function ProjectBlock({
                 index={i}
                 total={project.images.length}
                 frame={project.imageFrame}
-                onZoom={() => img.src && openZoom(img.src)}
+                onZoom={() => img.src && openZoom(project.images, img.src)}
               />
             ))}
           </div>
@@ -141,6 +149,110 @@ export function ProjectBlock({
         />
       )}
     </article>
+  );
+}
+
+function Row({
+  row,
+  frame,
+  onOpen,
+}: {
+  row: ProjectRow;
+  frame?: "phone";
+  onOpen: (src: string) => void;
+}) {
+  const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
+  const previews = (row.images ?? []).filter((im): im is typeof im & { src: string } => !!im.src);
+  const hasImages = previews.length > 0;
+
+  const content = (
+    <>
+      <span className="text-[13px] text-[var(--color-phosphor-faint)] sm:w-32 sm:shrink-0">{row.tag}</span>
+      <span
+        className={
+          hasImages
+            ? "flex-1 text-[var(--color-phosphor-bright)] underline underline-offset-4 decoration-[var(--color-border-bright)] group-hover:decoration-current"
+            : "flex-1 text-[var(--color-phosphor)]"
+        }
+      >
+        {row.text}
+      </span>
+      {row.archived && (
+        <span className="self-start sm:self-auto shrink-0 rounded-full border border-[var(--color-border)] px-2 text-[12px] leading-5 text-[var(--color-phosphor-faint)]">
+          archive
+        </span>
+      )}
+    </>
+  );
+  const rowClass = "flex flex-col sm:flex-row sm:items-baseline gap-x-4 gap-y-0.5 py-2.5";
+
+  if (!hasImages) {
+    return <li className={`${rowClass} ${row.archived ? "opacity-70" : ""}`}>{content}</li>;
+  }
+
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => onOpen(previews[0].src)}
+        onMouseMove={(e) => setPointer({ x: e.clientX, y: e.clientY })}
+        onMouseLeave={() => setPointer(null)}
+        className={`group w-full text-left cursor-zoom-in ${rowClass} ${row.archived ? "opacity-70" : ""}`}
+      >
+        {content}
+      </button>
+      {pointer && <HoverPreview images={previews} frame={frame} x={pointer.x} y={pointer.y} />}
+    </li>
+  );
+}
+
+/** images floating next to the cursor while a row is hovered (pointer devices only) */
+function HoverPreview({
+  images,
+  frame,
+  x,
+  y,
+}: {
+  images: { src: string; caption: string; alt?: string }[];
+  frame?: "phone";
+  x: number;
+  y: number;
+}) {
+  const shown = images.slice(0, 3);
+  const height = 200;
+  // keep the preview on screen: flip to the left of the cursor near the right edge
+  const flip = typeof window !== "undefined" && x > window.innerWidth * 0.55;
+  const top = Math.min(Math.max(8, y - height / 2), (typeof window !== "undefined" ? window.innerHeight : 800) - height - 8);
+
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none fixed z-[90] hidden [@media(hover:hover)]:flex gap-2"
+      style={{ top, ...(flip ? { right: window.innerWidth - x + 24 } : { left: x + 24 }) }}
+    >
+      {shown.map((im) => (
+        <div
+          key={im.src}
+          className={
+            frame === "phone"
+              ? "rounded-[16px] bg-black p-[3px] shadow-lg"
+              : "rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elev)] overflow-hidden shadow-lg"
+          }
+          style={{ height }}
+        >
+          {isVideoSrc(im.src) ? (
+            <video src={im.src} autoPlay muted loop playsInline className="h-full w-auto block" />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={im.src}
+              alt={im.alt ?? im.caption}
+              className={frame === "phone" ? "h-full w-auto block rounded-[13px]" : "h-full w-auto block"}
+            />
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 

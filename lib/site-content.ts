@@ -4,6 +4,16 @@ export type ProjectImage = {
   alt?: string;
 };
 
+/** one line of detail under an experience: what was done there */
+export type ProjectRow = {
+  tag: string;
+  text: string;
+  /** deprecated / no longer live */
+  archived?: boolean;
+  /** shown on hover (underlined row), click opens the gallery */
+  images?: ProjectImage[];
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -12,6 +22,8 @@ export type Project = {
   oneLiner: string;
   body: string[];
   images: ProjectImage[];
+  /** detail rows listed under the body */
+  rows?: ProjectRow[];
   links?: { label: string; url: string; description?: string }[];
   linksTitle?: string;
   /** wrap every image in a device shell (phone screenshots) */
