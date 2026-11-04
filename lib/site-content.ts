@@ -8,8 +8,8 @@ export type ProjectImage = {
 export type ProjectRow = {
   tag: string;
   text: string;
-  /** deprecated / no longer live */
-  archived?: boolean;
+  /** badge after the text; archived rows are faded */
+  status?: "live" | "soon" | "archived";
   /** shown on hover (underlined row), click opens the gallery */
   images?: ProjectImage[];
 };
@@ -43,6 +43,26 @@ export const projects: Record<string, Project> = {
       "Leading the product & design team (6 people). We ship a new app every day.",
       "To achieve this velocity, we build our own CLIs, skills and internal tools",
       "The team is made of 100% AI builders moving from Figma to Claude code.",
+    ],
+    rows: [
+      { tag: "Branding", text: "Website iteration #1", status: "archived" },
+      { tag: "Design", text: "Onboarding studio to ship new apps without coding experience", status: "live" },
+      { tag: "People", text: "2 exceptional Product Managers with 3+ years of exp." },
+      { tag: "Branding", text: "Website iteration #2", status: "archived" },
+      { tag: "People", text: "4 promising Junior Product Managers talents" },
+      { tag: "Product", text: "Decrease App delivery time from 2 months to 2 weeks", status: "archived" },
+      { tag: "Design", text: "Build 75 apps in 2025 (TDY, Harmony, Eve, Victus, etc.)" },
+      { tag: "Branding", text: "Visual branding assets on socials (linkedin, instagram, etc.)" },
+      { tag: "People", text: "Designed Peer Performance Review system across the company", status: "live" },
+      { tag: "Product", text: "Decrease App delivery time from 2 weeks to 2 days", status: "live" },
+      { tag: "Design", text: "Publishing platform to monitor apps KPIs and share results with studios in one tool", status: "live" },
+      { tag: "Branding", text: "Website iteration #3", status: "live" },
+      { tag: "Product", text: "Create internal skills to build faster app onboarding", status: "live" },
+      { tag: "Product", text: "Create internal skills to reduce App Store review time", status: "live" },
+      { tag: "Design", text: "Replace current toolstack (Amplitude, Adjust, Superwall) with internal tools", status: "live" },
+      { tag: "Design", text: "Build 150 apps in 2025 (Off-duty, Departure, Ingredex, etc.)" },
+      { tag: "Growth", text: "Build creatives ads across our scaling apps" },
+      { tag: "People", text: "Open the Barcelona office for internal mobility", status: "soon" },
     ],
     images: [],
     childGroups: [

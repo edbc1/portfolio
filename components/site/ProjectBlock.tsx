@@ -177,17 +177,19 @@ function Row({
       >
         {row.text}
       </span>
-      {row.archived && (
-        <span className="self-start sm:self-auto shrink-0 rounded-full border border-[var(--color-border)] px-2 text-[12px] leading-5 text-[var(--color-phosphor-faint)]">
-          archive
+      {row.status && (
+        <span className="self-start sm:self-auto shrink-0 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] px-2 text-[12px] leading-5 text-[var(--color-phosphor-faint)]">
+          {row.status === "live" && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-live)]" />}
+          {row.status}
         </span>
       )}
     </>
   );
-  const rowClass = "flex flex-col sm:flex-row sm:items-baseline gap-x-4 gap-y-0.5 py-2.5";
+  const archived = row.status === "archived";
+  const rowClass = `flex flex-col sm:flex-row sm:items-baseline gap-x-4 gap-y-0.5 py-2.5 ${archived ? "opacity-60" : ""}`;
 
   if (!hasImages) {
-    return <li className={`${rowClass} ${row.archived ? "opacity-70" : ""}`}>{content}</li>;
+    return <li className={rowClass}>{content}</li>;
   }
 
   return (
@@ -197,7 +199,7 @@ function Row({
         onClick={() => onOpen(previews[0].src)}
         onMouseMove={(e) => setPointer({ x: e.clientX, y: e.clientY })}
         onMouseLeave={() => setPointer(null)}
-        className={`group w-full text-left cursor-zoom-in ${rowClass} ${row.archived ? "opacity-70" : ""}`}
+        className={`group w-full text-left cursor-zoom-in ${rowClass}`}
       >
         {content}
       </button>

@@ -23,6 +23,7 @@
   --color-overlay: rgb(250 250 249 / 0.92);
   --color-selection-bg: #e3e3dd;
   --color-selection-fg: #1a1a19;
+  --color-live: #4f8a5b;
 }
 
 /* terminal view: phosphor on black */
