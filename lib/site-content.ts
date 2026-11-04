@@ -49,7 +49,7 @@ export const projects: Record<string, Project> = {
       "The team is made of 100% AI builders moving from Figma to Claude code.",
     ],
     rows: [
-      { tag: "Branding", text: "Logo #1", status: "live", images: [{ src: "/projects/rocapine/logo-1.webp", caption: "logo — pink" }, { src: "/projects/rocapine/logo-2.webp", caption: "logo — black" }, { src: "/projects/rocapine/logo-3.webp", caption: "logo — photo, orange" }, { src: "/projects/rocapine/logo-4.webp", caption: "logo — photo, blue" }, { src: "/projects/rocapine/logo-5.webp", caption: "logo — photo, green" }] },
+      { tag: "Branding", text: "Logo #1", status: "live", images: [{ src: "/projects/rocapine/logo-3.webp", caption: "logo — photo, orange" }, { src: "/projects/rocapine/logo-4.webp", caption: "logo — photo, blue" }, { src: "/projects/rocapine/logo-5.webp", caption: "logo — photo, green" }, { src: "/projects/rocapine/logo-1.webp", caption: "logo — pink" }, { src: "/projects/rocapine/logo-2.webp", caption: "logo — black" }] },
       { tag: "Branding", text: "Website iteration #1", status: "archived" },
       { tag: "Design", text: "Onboarding studio to ship new apps without coding experience", status: "live", images: [{ src: "/projects/onboarding-studio/1.webp", caption: "overview — what's live" }, { src: "/projects/onboarding-studio/3.webp", caption: "user detail — why did they get a paywall?" }] },
       { tag: "People", text: "2 exceptional Product Managers with 3+ years of exp." },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { projects, type Project, type ProjectImage, type ProjectRow } from "@/lib/site-content";
 
 type ZoomItem = { src: string; alt: string; caption: string; isVideo: boolean; frame?: "phone" };
@@ -199,24 +199,33 @@ function HoverPreview({
   x: number;
   y: number;
 }) {
-  const shown = images.slice(0, 3);
-  const height = 200;
+  const ref = useRef<HTMLDivElement>(null);
+  // a few images stay large; a long set shrinks to a wrapping grid so every one is visible
+  const height = images.length <= 3 ? 200 : images.length <= 8 ? 140 : 104;
   // keep the preview on screen: flip to the left of the cursor near the right edge
-  const flip = typeof window !== "undefined" && x > window.innerWidth * 0.55;
-  const top = Math.min(Math.max(8, y - height / 2), (typeof window !== "undefined" ? window.innerHeight : 800) - height - 8);
+  const flip = x > window.innerWidth * 0.55;
+
+  // clamp vertically once the grid's real height is known
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const h = el.offsetHeight;
+    el.style.top = `${Math.min(Math.max(8, y - h / 2), window.innerHeight - h - 8)}px`;
+  });
 
   return (
     <div
+      ref={ref}
       aria-hidden
-      className="pointer-events-none fixed z-[90] hidden [@media(hover:hover)]:flex gap-2 overflow-hidden"
+      className="pointer-events-none fixed z-[90] hidden [@media(hover:hover)]:flex flex-wrap gap-2"
       style={{
-        top,
+        top: y,
         // never run past the window edge
-        maxWidth: flip ? x - 32 : window.innerWidth - x - 32,
+        maxWidth: Math.min(640, flip ? x - 32 : window.innerWidth - x - 32),
         ...(flip ? { right: window.innerWidth - x + 24, justifyContent: "flex-end" } : { left: x + 24 }),
       }}
     >
-      {shown.map((im) => (
+      {images.map((im) => (
         <div
           key={im.src}
           className={
