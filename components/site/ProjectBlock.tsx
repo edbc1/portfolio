@@ -227,16 +227,21 @@ function HoverPreview({
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed z-[90] hidden [@media(hover:hover)]:flex gap-2"
-      style={{ top, ...(flip ? { right: window.innerWidth - x + 24 } : { left: x + 24 }) }}
+      className="pointer-events-none fixed z-[90] hidden [@media(hover:hover)]:flex gap-2 overflow-hidden"
+      style={{
+        top,
+        // never run past the window edge
+        maxWidth: flip ? x - 32 : window.innerWidth - x - 32,
+        ...(flip ? { right: window.innerWidth - x + 24, justifyContent: "flex-end" } : { left: x + 24 }),
+      }}
     >
       {shown.map((im) => (
         <div
           key={im.src}
           className={
             frame === "phone"
-              ? "rounded-[16px] bg-black p-[3px] shadow-lg"
-              : "rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elev)] overflow-hidden shadow-lg"
+              ? "shrink-0 rounded-[16px] bg-black p-[3px] shadow-lg"
+              : "shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elev)] overflow-hidden shadow-lg"
           }
           style={{ height }}
         >
