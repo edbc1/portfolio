@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   },
 };
 
-// set theme before first paint so there is no flash of the wrong palette
-const themeScript = `try{if(localStorage.getItem("theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
+// set view before first paint so there is no flash of the wrong palette
+const viewScript = `try{if(localStorage.getItem("view")==="terminal")document.documentElement.dataset.view="terminal"}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -39,7 +39,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: viewScript }} />
       </head>
       <body className="h-full">{children}</body>
     </html>

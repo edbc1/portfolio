@@ -5,8 +5,28 @@
   --font-sans: var(--font-geist-sans);
 }
 
-/* dark: phosphor on black (default) */
+/* default view: kindle colorsoft — light grey e-ink paper, soft ink, muted color */
 :root {
+  color-scheme: light;
+  --color-phosphor: #222221;
+  --color-phosphor-bright: #1a1a19;
+  --color-phosphor-dim: #555552;
+  --color-phosphor-faint: #8a8a86;
+  --color-phosphor-ghost: #efefec;
+  --color-bg: #fafaf9;
+  --color-bg-elev: #f4f4f2;
+  --color-bg-window: #f4f4f2;
+  --color-bg-titlebar: #efefec;
+  --color-border: #e2e2de;
+  --color-border-bright: #9d9d98;
+  --color-error: #a5503f;
+  --color-overlay: rgb(250 250 249 / 0.92);
+  --color-selection-bg: #e3e3dd;
+  --color-selection-fg: #1a1a19;
+}
+
+/* terminal view: phosphor on black */
+:root[data-view="terminal"] {
   color-scheme: dark;
   --color-phosphor: #ffffff;
   --color-phosphor-bright: #ffffff;
@@ -25,24 +45,9 @@
   --color-selection-fg: #000000;
 }
 
-/* light: kindle colorsoft — light grey e-ink paper, soft ink, muted color */
-:root[data-theme="light"] {
-  color-scheme: light;
-  --color-phosphor: #222221;
-  --color-phosphor-bright: #1a1a19;
-  --color-phosphor-dim: #555552;
-  --color-phosphor-faint: #8a8a86;
-  --color-phosphor-ghost: #efefec;
-  --color-bg: #fafaf9;
-  --color-bg-elev: #f4f4f2;
-  --color-bg-window: #f4f4f2;
-  --color-bg-titlebar: #efefec;
-  --color-border: #e2e2de;
-  --color-border-bright: #9d9d98;
-  --color-error: #a5503f;
-  --color-overlay: rgb(250 250 249 / 0.92);
-  --color-selection-bg: #e3e3dd;
-  --color-selection-fg: #1a1a19;
+/* the server always renders the default view; hide it until the client swaps in the terminal */
+:root[data-view="terminal"] [data-view-root="site"] {
+  visibility: hidden;
 }
 
 /* pixel dissolve: old snapshot stays put, new one is revealed by a stepped mask */
