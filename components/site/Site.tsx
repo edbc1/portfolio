@@ -5,7 +5,7 @@ import { contact, intro, playground, projects, work } from "@/lib/site-content";
 // wide screens: rail + content with three equal gaps (left edge, between, right edge);
 // the rail and the content column each carry 40px of padding on top of the 1fr
 const shell =
-  "mx-auto w-full max-w-[760px] lg:max-w-[1100px] lg:grid lg:grid-cols-[1fr_140px_1fr_760px_1fr]";
+  "mx-auto w-full max-w-[760px] lg:max-w-[1100px] lg:grid lg:grid-cols-[1fr_120px_1fr_760px_1fr]";
 const column = "px-5 md:px-10";
 
 const timeline: TimelineEntry[] = [

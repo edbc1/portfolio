@@ -111,12 +111,12 @@ body:has([role="dialog"]) .view-toggle {
 }
 
 /* site image strips run to the window's right edge. On wide screens the
-   content column sits in a 1fr|140px|1fr|760px|1fr grid capped at 1100px
-   (see Site.tsx): up to 1100px wide the edge is 40px + (100vw - 900px) / 3
-   away, past it 40px + 200px / 3 + (100vw - 1100px) / 2. Written flat as a
+   content column sits in a 1fr|120px|1fr|760px|1fr grid capped at 1100px
+   (see Site.tsx): up to 1100px wide the edge is 40px + (100vw - 880px) / 3
+   away, past it 40px + 220px / 3 + (100vw - 1100px) / 2. Written flat as a
    min() of the two lines: lightningcss segfaults on the nested form */
 @media (min-width: 64rem) {
   .bleed-right {
-    margin-right: min(calc(260px - 33.3333vw), calc(443.3333px - 50vw));
+    margin-right: min(calc(253.3333px - 33.3333vw), calc(436.6667px - 50vw));
   }
 }
