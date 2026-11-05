@@ -210,7 +210,7 @@ function HoverPreview({
   // never run past the window edge
   const maxWidth = Math.min(640, flip ? x - 32 : window.innerWidth - x - 32);
   // tiles share one box: wide banners get the footprint of a screenshot, not 4x it
-  const tileWidth = Math.min(maxWidth - 2, Math.round(height * 1.6));
+  const tileWidth = Math.min(maxWidth - 2, Math.round(height * 1.5));
 
   // clamp vertically once the grid's real height is known, and again as images load and grow it
   useLayoutEffect(() => {
