@@ -202,6 +202,9 @@ function HoverPreview({
   const ref = useRef<HTMLDivElement>(null);
   // a few images stay large; a long set shrinks to a wrapping grid so every one is visible
   const height = images.length <= 3 ? 200 : images.length <= 8 ? 140 : 104;
+  // phone corners and bezel scale with the tile, a fixed radius turns small tiles into pills
+  const bezel = height >= 140 ? 3 : 2;
+  const radius = Math.round(height * 0.075);
   // keep the preview on screen: flip to the left of the cursor near the right edge
   const flip = x > window.innerWidth * 0.55;
 
@@ -230,10 +233,10 @@ function HoverPreview({
           key={im.src}
           className={
             (im.frame ?? frame) === "phone"
-              ? "shrink-0 rounded-[16px] bg-black p-[3px] shadow-lg"
+              ? "shrink-0 bg-black shadow-lg"
               : "shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elev)] overflow-hidden shadow-lg"
           }
-          style={{ height }}
+          style={(im.frame ?? frame) === "phone" ? { height, padding: bezel, borderRadius: radius } : { height }}
         >
           {isVideoSrc(im.src) ? (
             <video src={im.src} autoPlay muted loop playsInline className="h-full w-auto block" />
@@ -242,7 +245,8 @@ function HoverPreview({
             <img
               src={im.src}
               alt={im.alt ?? im.caption}
-              className={(im.frame ?? frame) === "phone" ? "h-full w-auto block rounded-[13px]" : "h-full w-auto block"}
+              className="h-full w-auto block"
+              style={(im.frame ?? frame) === "phone" ? { borderRadius: radius - bezel } : undefined}
             />
           )}
         </div>
