@@ -207,13 +207,21 @@ function HoverPreview({
   const radius = Math.round(height * 0.075);
   // keep the preview on screen: flip to the left of the cursor near the right edge
   const flip = x > window.innerWidth * 0.55;
+  // never run past the window edge
+  const maxWidth = Math.min(640, flip ? x - 32 : window.innerWidth - x - 32);
 
-  // clamp vertically once the grid's real height is known
+  // clamp vertically once the grid's real height is known, and again as images load and grow it
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const h = el.offsetHeight;
-    el.style.top = `${Math.min(Math.max(8, y - h / 2), window.innerHeight - h - 8)}px`;
+    const clamp = () => {
+      const h = el.offsetHeight;
+      el.style.top = `${Math.min(Math.max(8, y - h / 2), window.innerHeight - h - 8)}px`;
+    };
+    clamp();
+    const ro = new ResizeObserver(clamp);
+    ro.observe(el);
+    return () => ro.disconnect();
   });
 
   return (
@@ -223,8 +231,7 @@ function HoverPreview({
       className="pointer-events-none fixed z-[90] hidden [@media(hover:hover)]:flex flex-wrap gap-2"
       style={{
         top: y,
-        // never run past the window edge
-        maxWidth: Math.min(640, flip ? x - 32 : window.innerWidth - x - 32),
+        maxWidth,
         ...(flip ? { right: window.innerWidth - x + 24, justifyContent: "flex-end" } : { left: x + 24 }),
       }}
     >
@@ -236,17 +243,26 @@ function HoverPreview({
               ? "shrink-0 bg-black shadow-lg"
               : "shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elev)] overflow-hidden shadow-lg"
           }
-          style={(im.frame ?? frame) === "phone" ? { height, padding: bezel, borderRadius: radius } : { height }}
+          style={(im.frame ?? frame) === "phone" ? { height, padding: bezel, borderRadius: radius } : undefined}
         >
           {isVideoSrc(im.src) ? (
-            <video src={im.src} autoPlay muted loop playsInline className="h-full w-auto block" />
+            <video
+              src={im.src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-auto h-auto block"
+              style={{ maxHeight: height, maxWidth: maxWidth - 2 }}
+            />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={im.src}
               alt={im.alt ?? im.caption}
-              className="h-full w-auto block"
-              style={(im.frame ?? frame) === "phone" ? { borderRadius: radius - bezel } : undefined}
+              className={(im.frame ?? frame) === "phone" ? "h-full w-auto block" : "w-auto h-auto block"}
+              // wide banners shrink to the preview width instead of spilling off screen
+              style={(im.frame ?? frame) === "phone" ? { borderRadius: radius - bezel } : { maxHeight: height, maxWidth: maxWidth - 2 }}
             />
           )}
         </div>
