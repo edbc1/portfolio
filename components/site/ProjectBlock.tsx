@@ -209,6 +209,8 @@ function HoverPreview({
   const flip = x > window.innerWidth * 0.55;
   // never run past the window edge
   const maxWidth = Math.min(640, flip ? x - 32 : window.innerWidth - x - 32);
+  // tiles share one box: wide banners get the footprint of a screenshot, not 4x it
+  const tileWidth = Math.min(maxWidth - 2, Math.round(height * 1.6));
 
   // clamp vertically once the grid's real height is known, and again as images load and grow it
   useLayoutEffect(() => {
@@ -253,7 +255,7 @@ function HoverPreview({
               loop
               playsInline
               className="w-auto h-auto block"
-              style={{ maxHeight: height, maxWidth: maxWidth - 2 }}
+              style={{ maxHeight: height, maxWidth: tileWidth }}
             />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
@@ -261,8 +263,8 @@ function HoverPreview({
               src={im.src}
               alt={im.alt ?? im.caption}
               className={(im.frame ?? frame) === "phone" ? "h-full w-auto block" : "w-auto h-auto block"}
-              // wide banners shrink to the preview width instead of spilling off screen
-              style={(im.frame ?? frame) === "phone" ? { borderRadius: radius - bezel } : { maxHeight: height, maxWidth: maxWidth - 2 }}
+              // wide banners shrink to the shared tile box instead of spilling off screen
+              style={(im.frame ?? frame) === "phone" ? { borderRadius: radius - bezel } : { maxHeight: height, maxWidth: tileWidth }}
             />
           )}
         </div>
